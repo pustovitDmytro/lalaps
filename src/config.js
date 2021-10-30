@@ -14,5 +14,9 @@ export default {
             appID       : +e.GITHUB_APP_ID
         },
         userId : +e.GITHUB_USER_ID
+    },
+    gitea : {
+        url   : new URL(e.GITEA_URL),
+        token : e.GITEA_TOKEN
     }
 };

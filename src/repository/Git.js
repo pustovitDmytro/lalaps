@@ -11,6 +11,28 @@ import * as res from './results';
 
 const CONFIG_FILE_NAME = '.lalapsrc.json';
 
+// export async function writeGitAuthor(): Promise<void> {
+//     const { gitAuthorName, gitAuthorEmail } = config;
+//     try {
+//       if (gitAuthorName) {
+//         logger.debug({ gitAuthorName }, 'Setting git author name');
+//         await git.addConfig('user.name', gitAuthorName);
+//       }
+//       if (gitAuthorEmail) {
+//         logger.debug({ gitAuthorEmail }, 'Setting git author email');
+//         await git.addConfig('user.email', gitAuthorEmail);
+//       }
+//     } catch (err) /* istanbul ignore next */ {
+//       checkForPlatformFailure(err);
+//       logger.debug(
+//         { err, gitAuthorName, gitAuthorEmail },
+//         'Error setting git author config'
+//       );
+//       throw new Error(TEMPORARY_ERROR);
+//     }
+//   }
+  
+
 export default class Git {
     constructor(gitConfig) {
         const { tmpFolder, url, repo } = gitConfig;
