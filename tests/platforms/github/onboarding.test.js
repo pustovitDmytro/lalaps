@@ -23,6 +23,7 @@ test('Repo without config', async function () {
     assert.equal(result.constructor.name, 'ONBOARDING_PR_OPEN');
 });
 
-after(function () {
+after(async function () {
+    await factory.cleanTmpFolder();
     unMockAPI();
 });

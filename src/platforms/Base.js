@@ -25,12 +25,17 @@ export class BaseRepo {
 
             if (res instanceof repoRes.VALID_CONFIG) {
                 const { rules, ...config } = res.payload;
+                const results = [];
 
                 for (const rule of rules) {
                     const r = await this.runAdvisory({ ...rule, ...config });
 
-                    console.log('r:', r);
+                    results.push(r);
                 }
+
+                await this.git.clear();
+
+                return results;
             }
 
             await this.git.clear();

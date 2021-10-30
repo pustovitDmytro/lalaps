@@ -31,6 +31,8 @@ export default class Test {
                 const fileData = await zip.files[filename].async('nodebuffer');
                 const dst = path.join(tmpReposDir, filename);
 
+                await fse.ensureDir(path.dirname(dst));
+
                 await (fileData.length > 0
                     ? fse.writeFile(dst, fileData)
                     : fse.ensureDir(dst)

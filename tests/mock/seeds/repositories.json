@@ -1,34 +1,24 @@
 [
     {
         "owner": "PadbergLLC",
-        "repository": "Ronstring"
+        "repository": "Ronstring",
+        "comment": "CONFIG_NOT_FOUND"
     },
     {
-        "name": "Voyatouch/Redhold",
-        "author": {
-            "login": "Voyatouch",
-            "id": 2
-        }
+        "repository": "Redhold",
+        "author": "Voyatouch",
+        "comment": "VALID_CONFIG + FULL_FIX"
     },
     {
-        "name": "Champlin/Bigtax",
-        "author": {
-            "login": "Champlin",
-            "id": 3
-        }
+        "repository": "Bigtax",
+        "author": "Champlin"
     },
     {
-        "name": "Shanahan-Towne/Alphazap",
-        "author": {
-            "login": "Shanahan-Towne",
-            "id": 1
-        }
+        "repository": "Alphazap",
+        "author": "Shanahan-Towne"
     },
     {
-        "name": "Walter-Muller/Overhold",
-        "author": {
-            "login": "Walter-Muller",
-            "id": 1
-        }
+        "repository": "Overhold",
+        "author": "Walter-Muller"
     }
 ]
