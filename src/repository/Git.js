@@ -2,6 +2,7 @@ import path from 'path';
 import SimpleGit from 'simple-git';
 import fs from 'fs-extra';
 import { v4 as uuid } from 'uuid';
+import config from '../config';
 import {
     createConfig,
     getConfig,
@@ -10,28 +11,7 @@ import {
 import * as res from './results';
 
 const CONFIG_FILE_NAME = '.lalapsrc.json';
-
-// export async function writeGitAuthor(): Promise<void> {
-//     const { gitAuthorName, gitAuthorEmail } = config;
-//     try {
-//       if (gitAuthorName) {
-//         logger.debug({ gitAuthorName }, 'Setting git author name');
-//         await git.addConfig('user.name', gitAuthorName);
-//       }
-//       if (gitAuthorEmail) {
-//         logger.debug({ gitAuthorEmail }, 'Setting git author email');
-//         await git.addConfig('user.email', gitAuthorEmail);
-//       }
-//     } catch (err) /* istanbul ignore next */ {
-//       checkForPlatformFailure(err);
-//       logger.debug(
-//         { err, gitAuthorName, gitAuthorEmail },
-//         'Error setting git author config'
-//       );
-//       throw new Error(TEMPORARY_ERROR);
-//     }
-//   }
-  
+const CONFIG = config.git;
 
 export default class Git {
     constructor(gitConfig) {
@@ -46,6 +26,8 @@ export default class Git {
         await fs.ensureDir(this.folder);
         this.git = SimpleGit(this.folder);
         await this.git.clone(this.url, this.folder);
+        await this.git.addConfig('user.name', CONFIG.name);
+        await this.git.addConfig('user.email', CONFIG.email);
     }
 
     async clear() {

@@ -18,5 +18,9 @@ export default {
     gitea : {
         url   : new URL(e.GITEA_URL),
         token : e.GITEA_TOKEN
+    },
+    git : {
+        name  : e.GIT_USER,
+        email : e.GIT_EMAIL
     }
 };
