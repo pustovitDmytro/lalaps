@@ -1,7 +1,7 @@
 {
     "timezone": "Europe/Kiev",
     "branchPrefix": "lalaps",
-    "labels": ["dependencies", "security"]
+    "labels": ["dependencies", "security"],
     "schedule": [
         "before 7:00 am every 10 days starting on the 5th day"
     ],
@@ -11,6 +11,6 @@
         "force": true,
         "commitMessageFix": "Chore: fixes npm audit vulnerabilities",
         "commitMessagePartialFix": "Chore: fixes some npm audit vulnerabilities",
-        "automerge": true,
+        "automerge": true
     } ]
 }
