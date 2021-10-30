@@ -4,3 +4,13 @@ import { entry } from './constants';
 const m = require(entry);
 
 export default m.default;
+
+const {
+    github,
+    gitea
+} = m;
+
+export {
+    github,
+    gitea
+};

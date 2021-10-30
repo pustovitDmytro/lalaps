@@ -34,6 +34,8 @@ export class BaseRepo {
             }
 
             await this.git.clear();
+
+            return res;
         } catch (error) {
             console.error(error);
             await this.git.clear();

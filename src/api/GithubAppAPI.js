@@ -32,10 +32,24 @@ export default class GithubAppAPI extends BaseAPI {
     }
 
     async listInstallations() {
-        return this.get('/installations');
+        const installations = await this.get('/installations');
+
+        return installations.map(i => dumpInstallation(i));
     }
 
     async createAcessToken(installationId) {
-        return this.post(`/installations/${installationId}/access_tokens`);
+        const token =  await this.post(`/installations/${installationId}/access_tokens`);
+
+        return dumpAccessToken(token);
     }
+}
+
+function dumpInstallation(i) {
+    return { id: i.id };
+}
+
+function dumpAccessToken(t) {
+    return {
+        token : t.token
+    };
 }

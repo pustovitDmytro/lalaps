@@ -6,12 +6,14 @@ const entry = process.env.ENTRY && path.resolve(process.env.ENTRY)
 || path.resolve(__dirname, '../src');
 
 const tmpFolder = path.join(__dirname, '../tmp/tests');
+const tmpReposDir = path.join(tmpFolder, 'repositories');
 
 
 const testsRootFolder = __dirname;
 
 export {
     tmpFolder,
+    tmpReposDir,
     entry,
     testsRootFolder
 };

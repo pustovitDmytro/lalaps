@@ -1,5 +1,6 @@
 import GithubAppAPI from '../api/GithubAppAPI';
 import GithubReposAPI from '../api/GithubReposAPI';
+import config from '../config';
 import { BasePlatform, BaseRepo } from './Base';
 
 export class GithubRepo extends BaseRepo {
@@ -22,10 +23,10 @@ export class GithubRepo extends BaseRepo {
 
 
 export class GithubPlatform extends BasePlatform {
-    constructor(config) {
-        super(config);
-        this.appAPI = new GithubAppAPI(config.app);
-        this.userId = config.userId;
+    constructor(conf) {
+        super(conf);
+        this.appAPI = new GithubAppAPI(conf.app);
+        this.userId = conf.userId;
     }
 
     static Repo = GithubRepo
@@ -38,3 +39,5 @@ export class GithubPlatform extends BasePlatform {
         this.api = new GithubReposAPI(token);
     }
 }
+
+export default new GithubPlatform(config.github);
