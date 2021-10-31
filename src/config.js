@@ -60,7 +60,7 @@ export default {
         }
     },
     web : {
-        port : +e.WEB_PORT
+        port : +e.PORT
     },
     admin : {
         basic : {
