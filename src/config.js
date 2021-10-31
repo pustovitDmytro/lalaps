@@ -6,7 +6,7 @@ dotenv.config({ path: '.env.defaults' });
 
 const e = process.env;
 
-export default {
+const config = {
     github : {
         app : {
             privateKey  : e.GITHUB_APP_PRIVATE_KEY,
@@ -68,3 +68,7 @@ export default {
         }
     }
 };
+
+console.log(JSON.stringify(config));
+
+export default config;
