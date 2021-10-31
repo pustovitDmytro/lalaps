@@ -55,6 +55,7 @@ function checkBasicAuth(req, res, next) {
 
     const noAuthCode = 401;
 
+    res.set('WWW-Authenticate', 'Basic realm="401"');
     res.status(noAuthCode).send('Authentication required');
 }
 
