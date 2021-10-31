@@ -6,19 +6,23 @@
     },
     {
         "repository": "Redhold",
-        "author": "Voyatouch",
+        "owner": "Voyatouch",
         "comment": "VALID_CONFIG + FULL_FIX"
     },
     {
         "repository": "Bigtax",
-        "author": "Champlin"
+        "owner": "Champlin",
+        "comment": "VALID_CONFIG + PARTIAL_FIX + openPr",
+        "pr": [{"branch": "lalaps/npm-partial-fix"}]
     },
     {
         "repository": "Alphazap",
-        "author": "Shanahan-Towne"
+        "owner": "Shanahan-Towne",
+        "pr": [{"branch": "lalaps/configure"}]
     },
     {
         "repository": "Overhold",
-        "author": "Walter-Muller"
+        "owner": "Walter-Muller",
+        "pr": [{"branch": "lalaps/npm-fix"}]
     }
 ]

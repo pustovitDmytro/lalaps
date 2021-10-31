@@ -1,8 +1,10 @@
+/* eslint-disable no-magic-numbers */
 import Git from '../repository/Git';
 import * as repoRes from '../repository/results';
 import * as advRes from '../advisories/results';
 import templates from '../templates';
 import advisories from '../advisories';
+import ProgressNotifier from '../ProgressNotifier';
 import * as platfRes from './results';
 
 const CONFIGURATION_BRANCH = 'lalaps/configure';
@@ -13,32 +15,52 @@ export class BaseRepo {
     }
 
     async analize() {
+        const pn = new ProgressNotifier([ 0.1, 0.9 ]);
+        const repoName = this.repo.name;
+
+        await templates.load();
+        pn.progress(0.1, 'templates ready');
+
         this.git = new Git({
-            tmpFolder : './tmp',
-            url       : this.getGitUrl(this.repo),
-            repo      : this.repo
+            url  : this.getGitUrl(this.repo),
+            repo : this.repo
         });
 
         try {
             await this.git.init();
+            pn.progress(0.25, `Repository ${repoName} cloned`);
+
             const res = await this.ensureOnboarding();
+
+            pn.progress(0.5, `Repository ${repoName} onboarded`, res.describe);
 
             if (res instanceof repoRes.VALID_CONFIG) {
                 const { rules, ...config } = res.payload;
                 const results = [];
 
+                let ruleIndex = 0;
+
                 for (const rule of rules) {
+                    const innerPn = new ProgressNotifier([ 0.5, 0.95 ], pn);
                     const r = await this.runAdvisory({ ...rule, ...config });
+                    const progress = innerPn.calcArray(rules.length, ruleIndex++, 1);
+
+                    innerPn.progress(progress, `${rule.advisory} rule completed`);
 
                     results.push(r);
                 }
 
+                pn.progress(0.95, `${rules.length} rules analized`);
+
                 await this.git.clear();
+                pn.progress(0.99, `Repository ${repoName} cleanup completed`);
 
                 return results;
             }
 
             await this.git.clear();
+            pn.progress(0.99, `Repository ${repoName} cleanup completed`);
+
 
             return res;
         } catch (error) {
@@ -201,6 +223,10 @@ export class BaseRepo {
 }
 
 export class BasePlatform {
+    constructor(config) {
+        this.shouldAnalize = config.analize;
+    }
+
     isRepoAnalizable() {
         return true;
     }
@@ -208,31 +234,41 @@ export class BasePlatform {
     static Repo = BaseRepo
 
     async getRepo(repoName) {
-        await templates.load();
+        const pn = new ProgressNotifier([ 0, 0.1 ]);
 
         await this.autorize();
+        pn.progress(0.3, `platform ${this.constructor.name} authorized`);
+
         const repository = await this.api.getRepo(repoName);
 
         if (!this.isRepoAnalizable(repository)) return;
+        pn.progress(0.6, `repository ${repository.name} analizable`);
 
         const repo = new this.constructor.Repo(repository);
 
         await repo.autorize(this);
+        pn.progress(0.9, `repository ${repository.name} authorized`);
 
         return repo;
     }
 
     async analize({ filter }) {
+        const pn = new ProgressNotifier();
+
         await this.autorize();
+        pn.progress(0.4, `platform ${this.constructor.name} authorized`);
         const repositories = await this.api.listRepos();
-        const allowedRepos = repositories.filter(repo => {
+
+        pn.progress(0.8, `${repositories.length} repositories available`);
+
+        const filtered = repositories.filter(repo => {
             if (filter && !filter.includes(repo.name)) return false;
 
             return this.isRepoAnalizable(repo);
         });
 
-        allowedRepos.forEach(repo => {
-            console.log(repo); // TODO: queue
-        });
+        pn.progress(0.95, `${filtered.length} repositories analizable`);
+
+        return filtered;
     }
 }

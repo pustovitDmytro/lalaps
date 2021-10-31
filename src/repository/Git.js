@@ -15,7 +15,8 @@ const CONFIG = config.git;
 
 export default class Git {
     constructor(gitConfig) {
-        const { tmpFolder, url, repo } = gitConfig;
+        const { url, repo } = gitConfig;
+        const tmpFolder = CONFIG.tmpFolder;
 
         this.folder = path.resolve(tmpFolder, uuid());
         this.url = url;

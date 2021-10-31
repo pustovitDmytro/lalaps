@@ -38,6 +38,15 @@ export class GithubPlatform extends BasePlatform {
 
         this.api = new GithubReposAPI(token);
     }
+
+    isRepoAnalizable(repo) {
+        const props = repo.properties;
+
+        return !props.isPrivate
+        && !props.isFork
+        && !props.isArchived
+        && !props.isDisabled;
+    }
 }
 
 export default new GithubPlatform(config.github);

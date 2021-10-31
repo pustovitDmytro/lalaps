@@ -26,7 +26,7 @@ function repoResponse(repo, index) {
     };
 }
 
-function pullResponse(repo, index) {
+function pullResponse(repo, index, data = {}) {
     return {
         id     : 99,
         number : index,
@@ -37,7 +37,7 @@ function pullResponse(repo, index) {
             ref : ''
         },
         'mergeable_state' : 'clean',
-        state             : 'open'
+        state             : data.state || 'open'
     };
 }
 
@@ -77,6 +77,7 @@ class MockGithubAppAPI extends GithubAppAPI {
 }
 
 class MockGithubReposAPI extends GithubReposAPI {
+    // eslint-disable-next-line sonarjs/cognitive-complexity
     async _axios(opts) {
         if (opts.url.match('/repos')) {
             const repoIndex = seedRepositories.findIndex(r => opts.url.includes(`/repos/${r.owner}/${r.repository}`));
@@ -89,7 +90,19 @@ class MockGithubReposAPI extends GithubReposAPI {
                 }
 
                 if (opts.method === 'GET' && opts.url.endsWith(`/repos/${repo.owner}/${repo.repository}/pulls`)) {
+                    const pull = repo.pr?.find(pr => opts.params.head === `${repo.owner}:${pr.branch}`);
+
+                    if (pull) return axiosResponse([ pullResponse(repo, repoIndex, { state: 'open' }) ]);
+
                     return axiosResponse([]);
+                }
+
+                if (opts.method === 'GET' && opts.url.includes(`/repos/${repo.owner}/${repo.repository}/pulls/`)) {
+                    return axiosResponse(pullResponse(repo, repoIndex));
+                }
+
+                if (opts.method === 'PATCH' && opts.url.includes(`/repos/${repo.owner}/${repo.repository}/pulls/`)) {
+                    return axiosResponse(pullResponse(repo, repoIndex, opts.data));
                 }
 
                 if (opts.method === 'POST' && opts.url.endsWith(`/repos/${repo.owner}/${repo.repository}/pulls`)) {
