@@ -10,7 +10,7 @@ export default async function (job) {
 
     const result = await new Promise((resolve, rej) => {
         RUNNER.run(async () => {
-            const toPercentage = 10;
+            const toPercentage = 100;
 
             RUNNER.set('notify', {
                 runner     : 'bull',
