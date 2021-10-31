@@ -30,8 +30,9 @@ const config = {
         redis : {
             port     : +e.REDIS_PORT,
             host     : e.REDIS_HOST,
-            db       : e.REDIS_DB,
-            password : e.REDIS_PASSWORD
+            db       : +e.REDIS_DB,
+            password : e.REDIS_PASSWORD,
+            username : e.REDIS_USER
         },
         main : {
             name     : e.MAIN_QUEUE_NAME,
