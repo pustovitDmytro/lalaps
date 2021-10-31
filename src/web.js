@@ -26,7 +26,7 @@ const app = express();
 
 let server = null;
 
-server = app.listen(0, () => {
+server = app.listen(config.web.port, () => {
     const { port } = server.address();
 
     console.log(`APP STARTING AT PORT ${port}`);

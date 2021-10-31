@@ -59,6 +59,9 @@ export default {
             canProcess  : e.REPO_QUEUE_PROCESS
         }
     },
+    web : {
+        port : +e.WEB_PORT
+    },
     admin : {
         basic : {
             adminPassword : e.BASIC_ADMIN_PASSWORD
