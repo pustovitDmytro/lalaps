@@ -34,7 +34,7 @@ const logger = createLogger({
     transports : [ new transports.Console() ]
 });
 
-export const log = new Decorator({
+export const logDecorator = new Decorator({
     logger : logger.log.bind(logger),
     level  : 'info'
 });

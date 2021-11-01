@@ -2,7 +2,6 @@
 import Queue from '../Queue';
 import config from '../config';
 import platforms from '../platforms';
-import { RUNNER } from '../namespaces';
 import repoHandler from './repo-analize';
 
 const repoQueue = new Queue({
@@ -19,33 +18,21 @@ export default async function (job) {
 
     if (!platform) throw new Error(`platform '${platformName}' not found`);
 
-    const repos = await new Promise((res, rej) => {
-        RUNNER.run(async () => {
-            const toPercentage = 100;
+    const [ repositories, pendingJobs ] = await Promise.all([
+        platform.analize({}),
+        repoQueue.findPendingJobs()
+    ]);
 
-            RUNNER.set('notify', {
-                runner     : 'bull',
-                onMessage  : msg => job.log(msg),
-                onProgress : p => job.progress(p * toPercentage)
-            });
+    const filteredRepos = repositories.filter(r => !pendingJobs.some(pendingJob => pendingJob.data.repo?.id === r.id));
 
-            try {
-                const repositories = await platform.analize({});
+    job.log(`${filteredRepos.length} repositories of ${repositories} will be added to queue`);
 
-                repositories.forEach(repo => {
-                    repoQueue.createJob(
-                        'ANALIZE_REPOSITORY',
-                        { repo, platformName }
-                    );
-                });
-
-                return res(repositories);
-            } catch (error) {
-                console.error(error);
-                rej(error);
-            }
-        });
+    repositories.forEach(repo => {
+        repoQueue.createJob(
+            'ANALIZE_REPOSITORY',
+            { repo, platformName }
+        );
     });
 
-    return repos.map(r => r.name);
+    return repositories.map(r => r.name);
 }

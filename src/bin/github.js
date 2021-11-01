@@ -1,9 +1,8 @@
 #!./node_modules/.bin/babel-node
 import { docopt } from 'docopt';
-import { RUNNER } from '../namespaces';
 import { GithubPlatform } from '../platforms/GitHub';
-
 import config from '../config';
+import { docoptRunner } from './utils';
 
 const github = new GithubPlatform(config.github);
 
@@ -39,27 +38,6 @@ async function run(opts) {
 
     if (opts.start) {
         await start(opts);
-    }
-}
-
-async function docoptRunner(opts, runner) {
-    try {
-        await new Promise((res, rej) => {
-            RUNNER.run(async () => {
-                RUNNER.set('notify', {
-                    runner    : 'bin',
-                    onMessage : msg => console.log(msg)
-                });
-
-                Promise.resolve(
-                    Reflect.apply(runner, null, [ opts ])
-                ).then(res).catch(rej);
-            });
-        });
-        process.exit(0);
-    } catch (error) {
-        console.error(error);
-        process.exit(1);
     }
 }
 

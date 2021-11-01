@@ -45,7 +45,7 @@ const config = {
             concurrency : +e.MAIN_QUEUE_CONCURRENCY,
             logLevel    : e.MAIN_QUEUE_LOG_LEVEL,
             repeat      : e.MAIN_QUEUE_REPEAT,
-            canProcess  : e.MAIN_QUEUE_PROCESS
+            canProcess  : e.MAIN_QUEUE_PROCESS === 'true'
         },
         repo : {
             name     : e.REPO_QUEUE_NAME,
@@ -57,7 +57,7 @@ const config = {
             },
             concurrency : +e.REPO_QUEUE_CONCURRENCY,
             logLevel    : e.REPO_QUEUE_LOG_LEVEL,
-            canProcess  : e.REPO_QUEUE_PROCESS
+            canProcess  : e.REPO_QUEUE_PROCESS === 'true'
         }
     },
     web : {

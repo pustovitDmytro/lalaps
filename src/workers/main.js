@@ -1,6 +1,7 @@
 import platforms from '../platforms';
 import Queue from '../Queue';
 import config from '../config';
+import logger from '../logger';
 import platformHandler from './platform-analize';
 
 const mainQueue = new Queue({
@@ -10,13 +11,21 @@ const mainQueue = new Queue({
     ANALIZE_PLATFORM : platformHandler
 });
 
-for (const platform of platforms) {
-    if (platform.shouldAnalize) {
-        mainQueue.createJob(
-            'ANALIZE_PLATFORM',
-            {
-                platformName : platform.constructor.name
-            }
-        );
+export default async function () {
+    for (const platform of platforms) {
+        if (platform.shouldAnalize) {
+            const job = await mainQueue.createJob(
+                'ANALIZE_PLATFORM',
+                {
+                    platformName : platform.constructor.name
+                }
+            );
+
+            logger.log('info', {
+                type     : 'ANALIZE_PLATFORM',
+                platform : platform.constructor.name,
+                job
+            });
+        }
     }
 }

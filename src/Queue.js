@@ -1,7 +1,8 @@
 import Bull from 'bull';
 import ms from 'ms';
 import packageConfig from '../package';
-import logger, { log }  from './logger';
+import logger, { logDecorator }  from './logger';
+import { getJobRunner } from './workers/utils';
 
 const QUEUES = [];
 
@@ -24,7 +25,8 @@ export default class Queue {
                 port     : redis.port,
                 host     : redis.host,
                 db       : redis.db,
-                password : redis.password
+                password : redis.password,
+                username : redis.username
             },
             prefix : packageConfig.name
         });
@@ -54,15 +56,14 @@ export default class Queue {
 
         this.jobTypes.forEach(type => {
             const decoratorConfig = {
-                level           : this.logLevel,
-                paramsSanitizer : params => params[0]?.data,
-                methodName      : `queue.${this.name}.${type}`
+                level : this.logLevel,
+                name  : `queue.${this.name}.${type}`
             };
 
             this.queue.process(
                 type,
                 this.concurrency,
-                log(decoratorConfig)(jobs[type])
+                getJobRunner(jobs[type], decoratorConfig)
             );
         });
 
@@ -75,11 +76,11 @@ export default class Queue {
     }
 
 
-    @log({ level: 'verbose', resultSanitizer: dumpJob })
+    @logDecorator({ level: 'verbose' })
     async createJob(type, data, options = {}) {
         if (!this.jobTypes.includes(type)) throw new Error(`WRONG_JOB_TYPE: ${type}`);
 
-        return this.queue.add(type, data, {
+        const job = await this.queue.add(type, data, {
             timeout : this.ttl,
             backoff : {
                 type  : this.backoff.type,
@@ -90,10 +91,12 @@ export default class Queue {
             repeat           : this.repeat ? { cron: this.repeat } : null,
             ...options
         });
+
+        return dumpJob(job);
     }
 
-    async findActiveJobs() {
-        return this.queue.getJobs([ 'active' ]);
+    async findPendingJobs() {
+        return this.queue.getJobs([ 'waiting' ]);
     }
 
     async close() {
