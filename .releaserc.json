@@ -21,10 +21,16 @@
                 "message": "Chore: (release) add version ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
             }
         ],
+        [ 
+            "semantic-release-heroku", {
+                "tarballDir": "./",
+                "name": "lalaps"
+            } 
+        ],
         [
             "@semantic-release/github", {
                 "assets": [
-                    { "path": "*.tgz", "label": "npm tarball" }
+                    { "path": "*.tgz", "label": "npm/heroku tarball" }
                 ]
             }
         ],

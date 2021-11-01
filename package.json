@@ -75,6 +75,7 @@
     "node-package-tester": "^1.1.25",
     "nyc": "^15.1.0",
     "semantic-release": "^18.0.0",
+    "semantic-release-heroku": "^1.2.0",
     "semantic-release-telegram": "^1.2.16",
     "uuid": "^8.3.2",
     "winston-array-transport": "^1.1.5"
