@@ -8,7 +8,6 @@
     "verbosity": 0,
     "rules": [ {
         "advisory": "npm",
-        "force": true,
         "commitMessageFix": "Chore: fixes npm audit vulnerabilities",
         "commitMessagePartialFix": "Chore: fixes some npm audit vulnerabilities",
         "automerge": true
