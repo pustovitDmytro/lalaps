@@ -1,6 +1,6 @@
 {
   "name": "lalaps",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "autofix security issues",
   "main": "./lib",
   "scripts": {
