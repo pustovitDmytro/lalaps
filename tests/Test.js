@@ -1,7 +1,7 @@
 import path from 'path';
 import jsZip from 'jszip';
 import fse from 'fs-extra';
-import { tmpFolder, tmpReposDir } from './constants';
+import { tmpFolder, tmpReposDir, seedReposDir } from './constants';
 
 import './init-hooks';
 
@@ -19,8 +19,6 @@ export default class Test {
     }
 
     async prepareRepositories(repoNames) {
-        const seedReposDir = path.join(__dirname, './mock/repositories/');
-
         await fse.ensureDir(tmpReposDir);
 
         for (const repoName of repoNames) {

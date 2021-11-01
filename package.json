@@ -13,7 +13,6 @@
     "test:coverage": "BUILD=0 MODE=test nyc mocha --config .mocharc.json 'tests/**/*test.js'",
     "test:debt": "jscpd src --config .jscpd.json",
     "test:lock": "lockfile-lint --path package-lock.json --validate-https --allowed-hosts npm",
-    "start:gitea": "docker run --volume $PWD/tmp/gitea:/data -p 4001:3000 -p 4002:22 gitea/gitea:1.15.5",
     "coverage-check": "MODE=test nyc check-coverage",
     "test": "npm run test:lint && npm run test:security && BUILD=1 npm run test:mocha",
     "sort-deps": "npm remove --save example; npm remove --save-dev example",

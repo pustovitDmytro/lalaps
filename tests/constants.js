@@ -7,7 +7,7 @@ const entry = process.env.ENTRY && path.resolve(process.env.ENTRY)
 
 const tmpFolder = path.join(__dirname, '../tmp/tests');
 const tmpReposDir = path.join(tmpFolder, 'repositories');
-
+const seedReposDir = path.join(__dirname, 'mock/repositories/');
 
 const testsRootFolder = __dirname;
 
@@ -15,5 +15,6 @@ export {
     tmpFolder,
     tmpReposDir,
     entry,
-    testsRootFolder
+    testsRootFolder,
+    seedReposDir
 };
