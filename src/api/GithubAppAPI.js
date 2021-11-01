@@ -8,20 +8,40 @@ function tokenTimestamp(date) {
 
 export default class GithubAppAPI extends BaseAPI {
     constructor(ghAppConfig) {
-        const { tokenExpire, privateKey, appID } = ghAppConfig;
+        const { tokenExpire, privateKey, appID, timeToRefresh } = ghAppConfig;
 
         super('https://api.github.com/app');
+        this._tokenExpire = tokenExpire;
+        this._privateKey = privateKey;
+        this._appID = appID;
+        this._timeToRefresh = timeToRefresh;
+        this.createToken();
+    }
+
+    createToken() {
         const payload = {
-            exp : tokenTimestamp(dayjs().add(tokenExpire)),
+            exp : tokenTimestamp(dayjs().add(this._tokenExpire)),
             iat : tokenTimestamp(dayjs().subtract(1, 'minute')),
-            iss : appID
+            iss : this._appID
         };
 
         this.token = jsonwebtoken.sign(
             payload,
-            privateKey,
+            this._privateKey,
             { algorithm: 'RS256' }
         );
+    }
+
+    refreshToken() {
+        const payload = jsonwebtoken.decode(this.token);
+        const expTime = dayjs.unix(payload.exp);
+        const left = expTime.diff(dayjs(), 'millisecond');
+
+        if (left < this._timeToRefresh) {
+            this.createToken();
+
+            return true;
+        }
     }
 
     getHeaders() {

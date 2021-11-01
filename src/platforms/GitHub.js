@@ -32,7 +32,9 @@ export class GithubPlatform extends BasePlatform {
     static Repo = GithubRepo
 
     async autorize() {
-        if (this.api) return;
+        const isRefreshed = this.appAPI.refreshToken();
+
+        if (this.api && !isRefreshed) return;
         const [ installation ] = await this.appAPI.listInstallations();
         const { token } = await this.appAPI.createAcessToken(installation.id);
 

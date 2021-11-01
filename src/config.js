@@ -9,9 +9,10 @@ const e = process.env;
 const config = {
     github : {
         app : {
-            privateKey  : e.GITHUB_APP_PRIVATE_KEY,
-            tokenExpire : ms(e.GITHUB_APP_TOKEN_EXPIRE),
-            appID       : +e.GITHUB_APP_ID
+            privateKey    : e.GITHUB_APP_PRIVATE_KEY,
+            tokenExpire   : ms(e.GITHUB_APP_TOKEN_EXPIRE),
+            timeToRefresh : ms(e.GITHUB_APP_TOKEN_REFRESH),
+            appID         : +e.GITHUB_APP_ID
         },
         userId  : +e.GITHUB_USER_ID,
         analize : true

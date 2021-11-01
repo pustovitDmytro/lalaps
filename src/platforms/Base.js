@@ -233,6 +233,10 @@ export class BasePlatform {
 
     static Repo = BaseRepo
 
+    async autorize() {
+        return;
+    }
+
     async getRepo(repoName) {
         const pn = new ProgressNotifier([ 0, 0.1 ]);
 

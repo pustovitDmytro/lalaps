@@ -29,10 +29,6 @@ export class GiteaPlatform extends BasePlatform {
     }
 
     static Repo = GiteaRepo
-
-    async autorize() {
-        return;
-    }
 }
 
 export default new GiteaPlatform(config.gitea);
