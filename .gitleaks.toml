@@ -138,3 +138,8 @@ title = "gitleaks config"
     description = "PyPI upload token"
     regex = '''pypi-AgEIcHlwaS5vcmc[A-Za-z0-9-_]{50,1000}'''
     tags = ["key", "pypi"]
+
+[allowlist]
+  description = "Skip checks for test variables"
+  commits = [ "2ec5e9615c4f319ad3b6733816d451da6f200532" ]
+  files = [ '''tests/test.env''' ]
