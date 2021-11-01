@@ -90,7 +90,7 @@ class MockGithubReposAPI extends GithubReposAPI {
                 }
 
                 if (opts.method === 'GET' && opts.url.endsWith(`/repos/${repo.owner}/${repo.repository}/pulls`)) {
-                    const pull = repo.pr?.find(pr => opts.params.head === `${repo.owner}:${pr.branch}`);
+                    const pull = (repo.pr || []).find(pr => opts.params.head === `${repo.owner}:${pr.branch}`);
 
                     if (pull) return axiosResponse([ pullResponse(repo, repoIndex, { state: 'open' }) ]);
 
