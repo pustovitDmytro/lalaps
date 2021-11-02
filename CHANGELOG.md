@@ -1,3 +1,14 @@
+## [1.0.1](https://github.com/pustovitDmytro/lalaps/compare/v1.0.0...v1.0.1) (2021-11-01)
+
+
+### Chore
+
+* adds autodeploy to heroku ([7e83d5a](https://github.com/pustovitDmytro/lalaps/commit/7e83d5ae09a322533cd564b7df271069af8351fc))
+
+### Fix
+
+* refresh github token ([9854d42](https://github.com/pustovitDmytro/lalaps/commit/9854d42906fd96a9a1ba55f47a7a61d0c634bf06))
+
 # 1.0.0 (2021-11-01)
 
 
