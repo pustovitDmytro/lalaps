@@ -1,3 +1,15 @@
+# [1.1.0](https://github.com/pustovitDmytro/lalaps/compare/v1.0.1...v1.1.0) (2021-11-02)
+
+
+### Fix
+
+* change default expire limits to match github requirements ([d07420e](https://github.com/pustovitDmytro/lalaps/commit/d07420e9cc335d2af37215fe2ce1c322de5abc76))
+* fixes platform-analize log ([8ee16d1](https://github.com/pustovitDmytro/lalaps/commit/8ee16d16557dc757db285d03948c39eb542b68f2))
+
+### New
+
+* adds Lalaps email ([fff3bcb](https://github.com/pustovitDmytro/lalaps/commit/fff3bcb6578b3bc9508cf66b6352325e6b82d542))
+
 ## [1.0.1](https://github.com/pustovitDmytro/lalaps/compare/v1.0.0...v1.0.1) (2021-11-01)
 
 
