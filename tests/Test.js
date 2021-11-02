@@ -2,8 +2,11 @@ import path from 'path';
 import jsZip from 'jszip';
 import fse from 'fs-extra';
 import { tmpFolder, tmpReposDir, seedReposDir } from './constants';
+import { load } from './utils';
 
 import './init-hooks';
+
+const Queue = load('Queue').default;
 
 export * from './utils';
 // eslint-disable-next-line import/export
@@ -39,6 +42,10 @@ export default class Test {
 
             await Promise.all(promises);
         }
+    }
+
+    async dropQueue() {
+        await Queue.clean();
     }
 }
 

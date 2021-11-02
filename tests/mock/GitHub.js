@@ -79,6 +79,13 @@ class MockGithubAppAPI extends GithubAppAPI {
 class MockGithubReposAPI extends GithubReposAPI {
     // eslint-disable-next-line sonarjs/cognitive-complexity
     async _axios(opts) {
+        if (opts.url.match('/installation/repositories')) {
+            return axiosResponse({
+                repositories : seedRepositories
+                    .map((repo, index) => repoResponse(repo, index))
+            });
+        }
+
         if (opts.url.match('/repos')) {
             const repoIndex = seedRepositories.findIndex(r => opts.url.includes(`/repos/${r.owner}/${r.repository}`));
 

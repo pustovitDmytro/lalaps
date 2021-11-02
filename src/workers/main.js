@@ -12,6 +12,8 @@ const mainQueue = new Queue({
 });
 
 export default async function () {
+    const res = [];
+
     for (const platform of platforms) {
         if (platform.shouldAnalize) {
             const job = await mainQueue.createJob(
@@ -21,11 +23,18 @@ export default async function () {
                 }
             );
 
-            logger.log('info', {
-                type     : 'ANALIZE_PLATFORM',
+            const result = {
                 platform : platform.constructor.name,
-                job
+                job      : job.id
+            };
+
+            logger.log('info', {
+                type : 'ANALIZE_PLATFORM',
+                ...result
             });
+            res.push(result);
         }
     }
+
+    return res;
 }
