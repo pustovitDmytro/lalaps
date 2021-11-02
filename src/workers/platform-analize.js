@@ -25,7 +25,7 @@ export default async function (job) {
 
     const filteredRepos = repositories.filter(r => !pendingJobs.some(pendingJob => pendingJob.data.repo?.id === r.id));
 
-    job.log(`${filteredRepos.length} repositories of ${repositories} will be added to queue`);
+    job.log(`${filteredRepos.length} repositories of ${repositories.length} will be added to queue`);
 
     repositories.forEach(repo => {
         repoQueue.createJob(
