@@ -62,11 +62,10 @@ const config = {
         }
     },
     web : {
-        port : +e.PORT
-    },
-    admin : {
-        basic : {
-            adminPassword : e.BASIC_ADMIN_PASSWORD
+        port  : +e.PORT,
+        start : e.WEB_START === 'true',
+        admin : {
+            password : e.BASIC_ADMIN_PASSWORD
         }
     }
 };

@@ -1,5 +1,4 @@
 import express from 'express';
-
 import { createBullBoard } from '@bull-board/api';
 import { BullAdapter } from '@bull-board/api/bullAdapter';
 import { ExpressAdapter } from '@bull-board/express';
@@ -26,11 +25,13 @@ const app = express();
 
 let server = null;
 
-server = app.listen(config.web.port, () => {
-    const { port } = server.address();
+if (config.web.start) {
+    server = app.listen(config.web.port, () => {
+        const { port } = server.address();
 
-    console.log(`APP STARTING AT PORT ${port}`);
-});
+        console.log(`WEB STARTING AT PORT ${port}`);
+    });
+}
 
 export default app;
 
@@ -42,8 +43,8 @@ export function onShutdown() {
     }
 }
 
-serverAdapter.setBasePath('/admin/queues');
-const auth = { login: 'admin', password: config.admin.basic.adminPassword };
+serverAdapter.setBasePath('/admin/bull');
+const auth = { login: 'admin', password: config.web.admin.password };
 
 function checkBasicAuth(req, res, next) {
     const b64auth = (req.headers.authorization || '').split(' ')[1] || '';
@@ -59,4 +60,4 @@ function checkBasicAuth(req, res, next) {
     res.status(noAuthCode).send('Authentication required');
 }
 
-app.use('/admin/queues', checkBasicAuth, serverAdapter.getRouter());
+app.use('/admin/bull', checkBasicAuth, serverAdapter.getRouter());
