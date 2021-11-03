@@ -77,5 +77,5 @@ export function axiosError(message, data) {
 }
 
 export function getTestTraceId() {
-    return getNamespace('__TEST__').get('current').id;
+    return getNamespace('__TEST__').get('current')?.id;
 }

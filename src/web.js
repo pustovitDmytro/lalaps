@@ -2,6 +2,7 @@ import express from 'express';
 import { createBullBoard } from '@bull-board/api';
 import { BullAdapter } from '@bull-board/api/bullAdapter';
 import { ExpressAdapter } from '@bull-board/express';
+import packageInfo from '../package.json';
 
 import Queue from './Queue';
 import config from './config';
@@ -60,4 +61,13 @@ function checkBasicAuth(req, res, next) {
     res.status(noAuthCode).send('Authentication required');
 }
 
+function renderInfo(req, res) {
+    res.send({
+        name        : packageInfo.name,
+        version     : packageInfo.version,
+        description : packageInfo.description
+    });
+}
+
 app.use('/admin/bull', checkBasicAuth, serverAdapter.getRouter());
+app.use('/admin/info', checkBasicAuth, renderInfo);

@@ -1,34 +1,33 @@
+import { assert } from 'chai';
 import Test from '../Test';
 import request from '../request';
 
 const factory = new Test();
 
-suite('Bull board #web #redis');
+suite('Info Route #web #redis');
 
 before(async function () {
     await factory.dropQueue();
 });
 
-test('Negative: no-auth', async function () {
+test('Negative: invalid creds', async function () {
     await request
-        .get('/admin/bull')
+        .get('/admin/info')
+        .auth('user', 'password')
         .expect(401)
         .expect('WWW-Authenticate', 'Basic realm="401"');
 });
 
-test('Negative: invalid creds', async function () {
-    await request
-        .get('/admin/bull')
-        .auth('user', 'password')
-        .expect(401);
-});
-
 test('Positive: admin creds', async function () {
     await request
-        .get('/admin/bull')
+        .get('/admin/info')
         .auth('admin', process.env.BASIC_ADMIN_PASSWORD)
         .expect(200)
-        .expect('Content-Type', 'text/html; charset=utf-8');
+        .expect('Content-Type', 'application/json; charset=utf-8')
+        .expect(({ body }) => {
+            assert.exists(body.version);
+            assert.equal(body.name, 'lalaps');
+        });
 });
 
 after(async function () {
