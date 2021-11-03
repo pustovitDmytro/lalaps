@@ -1,3 +1,15 @@
+# [1.2.0](https://github.com/pustovitDmytro/lalaps/compare/v1.1.0...v1.2.0) (2021-11-03)
+
+
+### Chore
+
+* adds redis to circle-ci ([79dc924](https://github.com/pustovitDmytro/lalaps/commit/79dc924873e27887074ef4b4b1eed7326c678a5b))
+* adds tests for workers ([08b101e](https://github.com/pustovitDmytro/lalaps/commit/08b101ee859b5bd758093f56c2c6f784be0dad81))
+
+### New
+
+* adds tests for bull board ([18f062a](https://github.com/pustovitDmytro/lalaps/commit/18f062a45d1678cff1764c334aa6fee6c9dbf331))
+
 # [1.1.0](https://github.com/pustovitDmytro/lalaps/compare/v1.0.1...v1.1.0) (2021-11-02)
 
 
