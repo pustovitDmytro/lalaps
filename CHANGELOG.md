@@ -1,3 +1,11 @@
+# [1.4.0](https://github.com/pustovitDmytro/lalaps/compare/v1.3.0...v1.4.0) (2021-11-04)
+
+
+### New
+
+* handle multiple simultenious rules ([cc382c9](https://github.com/pustovitDmytro/lalaps/commit/cc382c978feb92ba0c5030d31ace975161adbf50))
+* refresh concurent PR's ([c81eff0](https://github.com/pustovitDmytro/lalaps/commit/c81eff0dc577edd1c614d0d65b9ac10c2dc841fb))
+
 # [1.3.0](https://github.com/pustovitDmytro/lalaps/compare/v1.2.0...v1.3.0) (2021-11-03)
 
 
