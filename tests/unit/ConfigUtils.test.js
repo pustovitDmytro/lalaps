@@ -45,8 +45,8 @@ test('describe advanced config', async function () {
     assert.deepEqual(production, {
         type        : 'npm',
         description : [
-            'Full fix will be pushed to "lalaps/npm-production/fix" branch with commit message "Fix: fixes npm audit vulnerabilities"',
-            'Partial fix will be pushed to "lalaps/npm-production/partial-fix" with commit message "Fix: fixes some npm audit vulnerabilities"',
+            'Full fix will be pushed to "lalaps/npm-production-fix" branch with commit message "Fix: fixes npm audit vulnerabilities"',
+            'Partial fix will be pushed to "lalaps/npm-production-partial-fix" with commit message "Fix: fixes some npm audit vulnerabilities"',
             'Vulnerabilities will be fixed using npm-audit command',
             '--production: Only production dependencies will be checked',
             '[dependencies, security] labels will be added to pull requests',
@@ -57,8 +57,8 @@ test('describe advanced config', async function () {
     assert.deepEqual(npm, {
         type        : 'npm',
         description : [
-            'Full fix will be pushed to "lalaps/npm/fix" branch with commit message "Chore: fixes npm audit vulnerabilities"',
-            'Partial fix will be pushed to "lalaps/npm/partial-fix" with commit message "Chore: fixes some npm audit vulnerabilities"',
+            'Full fix will be pushed to "lalaps/npm-fix" branch with commit message "Chore: fixes npm audit vulnerabilities"',
+            'Partial fix will be pushed to "lalaps/npm-partial-fix" with commit message "Chore: fixes some npm audit vulnerabilities"',
             'Vulnerabilities will be fixed using npm-audit command',
             '[dependencies, security] labels will be added to pull requests',
             'Fixes will be automerged on next run'
@@ -68,8 +68,8 @@ test('describe advanced config', async function () {
     assert.deepEqual(force, {
         type        : 'npm',
         description : [
-            'Full fix will be pushed to "lalaps/npm-force/fix" branch with commit message "Chore: fixes npm audit vulnerabilities"',
-            'Partial fix will be pushed to "lalaps/npm-force/partial-fix" with commit message "Chore: fixes some npm audit vulnerabilities"',
+            'Full fix will be pushed to "lalaps/npm-force-fix" branch with commit message "Chore: fixes npm audit vulnerabilities"',
+            'Partial fix will be pushed to "lalaps/npm-force-partial-fix" with commit message "Chore: fixes some npm audit vulnerabilities"',
             'Vulnerabilities will be fixed using npm-audit command',
             '--force: Removes various protections against unfortunate side effects, common mistakes, unnecessary performance degradation, and malicious input.\nNote: it is strongly recommended that you do not use this option with automerge',
             '[dependencies, security] labels will be added to pull requests'
@@ -86,8 +86,8 @@ test('describe default npm config', async function () {
     assert.deepEqual(npm, {
         type        : 'npm',
         description : [
-            'Full fix will be pushed to "lalaps/npm/fix" branch with commit message "Chore: fixes npm audit vulnerabilities"',
-            'Partial fix will be pushed to "lalaps/npm/partial-fix" with commit message "Chore: fixes some npm audit vulnerabilities"',
+            'Full fix will be pushed to "lalaps/npm-fix" branch with commit message "Chore: fixes npm audit vulnerabilities"',
+            'Partial fix will be pushed to "lalaps/npm-partial-fix" with commit message "Chore: fixes some npm audit vulnerabilities"',
             'Vulnerabilities will be fixed using npm-audit command',
             '[dependencies, security] labels will be added to pull requests',
             'Fixes will be automerged on next run'

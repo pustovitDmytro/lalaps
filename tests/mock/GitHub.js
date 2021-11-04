@@ -31,10 +31,10 @@ function pullResponse(repo, index, data = {}) {
         id     : 99,
         number : index,
         user   : { login: repo.owner, id: index },
-        title  : 'sell shape protection stared shown',
-        body   : 'vegetable mark subject paid organized paragraph give earth beautiful bent feet climate die salt built tobacco lovely middle border',
+        title  : data.title || 'sell shape protection stared shown',
+        body   : data.body || 'vegetable mark subject paid organized paragraph give earth beautiful bent feet climate die salt built tobacco lovely middle border',
         head   : {
-            ref : ''
+            ref : data.branch
         },
         'mergeable_state' : 'clean',
         state             : data.state || 'open'
@@ -99,7 +99,14 @@ class MockGithubReposAPI extends GithubReposAPI {
                 if (opts.method === 'GET' && opts.url.endsWith(`/repos/${repo.owner}/${repo.repository}/pulls`)) {
                     const pull = (repo.pr || []).find(pr => opts.params.head === `${repo.owner}:${pr.branch}`);
 
-                    if (pull) return axiosResponse([ pullResponse(repo, repoIndex, { state: 'open' }) ]);
+                    if (pull) {
+                        return axiosResponse([
+                            pullResponse(repo, repoIndex, {
+                                state  : 'open',
+                                branch : pull.branch
+                            })
+                        ]);
+                    }
 
                     return axiosResponse([]);
                 }
@@ -113,7 +120,7 @@ class MockGithubReposAPI extends GithubReposAPI {
                 }
 
                 if (opts.method === 'POST' && opts.url.endsWith(`/repos/${repo.owner}/${repo.repository}/pulls`)) {
-                    return axiosResponse(pullResponse(repo, repoIndex));
+                    return axiosResponse(pullResponse(repo, repoIndex, opts.data));
                 }
             }
         }

@@ -2,7 +2,8 @@
     {
         "owner": "PadbergLLC",
         "repository": "Ronstring",
-        "comment": "CONFIG_NOT_FOUND"
+        "comment": "CONFIG_NOT_FOUND + concurentPR",
+        "pr": [{"branch": "lalaps/configure"}]
     },
     {
         "repository": "Redhold",
@@ -23,6 +24,7 @@
     {
         "repository": "Overhold",
         "owner": "Walter-Muller",
-        "pr": [{"branch": "lalaps/npm-fix"}]
+        "pr": [{"branch": "lalaps/npm-fix"}],
+        "comment": "fixable dependency + fixable dev dependency in 2 advisories"
     }
 ]

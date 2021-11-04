@@ -26,14 +26,19 @@ test('VALID_CONFIG + FULL_FIX #npm', async function () {
     const repo = await github.getRepo(`${fullFix.owner}/${fullFix.repository}`);
     const results = await repo.analize();
 
-    assert.lengthOf(results, 1);
-    const [ result ] = results;
+    assert.lengthOf(results, 2);
+    const [ prod, dev ] = results;
 
-    assert.equal(result.constructor.name, 'FIX_PR_OPEN');
+    assert.equal(prod.constructor.name, 'FIX_PR_OPEN');
+    assert.include(prod.payload.body, 'This PR fixes 2 of 2 npm vulnerabilities');
+
+    assert.equal(dev.constructor.name, 'FIX_PR_OPEN');
+    assert.include(dev.payload.body, 'This PR fixes 1 of 3 npm vulnerabilities');
 });
 
 test('PARTIAL_FIX + openPr #npm', async function () {
     const repo = await github.getRepo(`${partFix.owner}/${partFix.repository}`);
+
     const results = await repo.analize();
 
     assert.lengthOf(results, 1);
@@ -46,10 +51,10 @@ test('NOT_VULNERABLE + Pr open #npm', async function () {
     const repo = await github.getRepo(`${notVuln.owner}/${notVuln.repository}`);
     const results = await repo.analize();
 
-    assert.lengthOf(results, 1);
-    const [ result ] = results;
+    assert.lengthOf(results, 2);
 
-    assert.equal(result.constructor.name, 'NOT_VULNERABLE');
+    assert.equal(results[0].constructor.name, 'NOT_VULNERABLE');
+    assert.equal(results[1].constructor.name, 'NOT_VULNERABLE');
 });
 
 after(async function () {

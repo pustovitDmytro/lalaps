@@ -10,7 +10,8 @@ export default class NPM extends Advisory {
 
     async check() {
         const stdout = await executeAuditCommand({
-            cwd : this._folder
+            cwd        : this._folder,
+            production : this._production
         });
 
         const out = JSON.parse(stdout);
@@ -27,9 +28,10 @@ export default class NPM extends Advisory {
 
     async fix() {
         await executeAuditCommand({
-            force : true,
-            fix   : true,
-            cwd   : this._folder
+            force      : this._force,
+            production : this._production,
+            fix        : true,
+            cwd        : this._folder
         });
     }
 
@@ -87,13 +89,22 @@ export default class NPM extends Advisory {
     }
 }
 
-async function executeAuditCommand({ force, cwd, fix, json = true }) {
+async function executeAuditCommand({
+    force,
+    cwd,
+    fix,
+    json = true,
+    production
+}) {
     const params = [ ];
 
     if (fix) params.push('fix');
     if (json) params.push('--json');
     if (force) params.push('--force');
+    if (production) params.push('--only=prod');
+
     try {
+        // console.log('npm audit', params);
         const res = await execa('npm', [ 'audit', ...params ], { cwd });
 
         return res.stdout;

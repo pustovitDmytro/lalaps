@@ -224,8 +224,11 @@ export class BaseRepo {
 
     async runAdvisory(config) {
         const Advisory = advisories[config.advisory];
+
+        this.git.checkout(Math.random());
         const advisory = new Advisory({ ...config, folder: this.git.folder });
         const res = await advisory.run();
+
         const targetBranch = advisory.getTragetBranch(res);
         const concurentBranch = advisory.getConcurentBranch(res);
 
