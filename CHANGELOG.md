@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/pustovitDmytro/lalaps/compare/v1.5.0...v1.5.1) (2021-11-04)
+
+
+### Fix
+
+* reset repo between advisories ([0fe2b34](https://github.com/pustovitDmytro/lalaps/commit/0fe2b34b16cc89d090b331ce2aca05d35233b510))
+
 # [1.5.0](https://github.com/pustovitDmytro/lalaps/compare/v1.4.2...v1.5.0) (2021-11-04)
 
 
