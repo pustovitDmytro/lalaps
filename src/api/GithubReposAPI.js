@@ -149,7 +149,6 @@ export default class GithubReposAPI extends BaseAPI {
 
     async updatePR(repo, pr, { title, body, state }) {
         const res = await this.patch(`/repos/${repo.name}/pulls/${pr.number}`, {
-            'maintainer_can_modify' : false,
             title,
             body,
             state
