@@ -225,7 +225,7 @@ export class BaseRepo {
     async runAdvisory(config) {
         const Advisory = advisories[config.advisory];
 
-        this.git.checkout(Math.random());
+        this.git.reset();
         const advisory = new Advisory({ ...config, folder: this.git.folder });
         const res = await advisory.run();
 
@@ -254,6 +254,8 @@ export class BaseRepo {
         if (res instanceof advRes.PARTIAL_FIX || res instanceof advRes.FULL_FIX) {
             return this.handleFixFound(advisory, config, res, { targetPr, concurentPr, targetBranch, concurentBranch });
         }
+
+        return res;
     }
 }
 

@@ -78,7 +78,6 @@
     "semantic-release-heroku": "^1.2.0",
     "semantic-release-telegram": "^1.2.16",
     "supertest": "^6.1.6",
-    "uuid": "^8.3.2",
     "winston-array-transport": "^1.1.5"
   },
   "dependencies": {
@@ -99,6 +98,7 @@
     "ms": "2.1.3",
     "myrmidon": "1.6.1",
     "simple-git": "2.47.0",
+    "uuid": "8.3.2",
     "winston": "3.3.3"
   }
 }

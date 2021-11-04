@@ -50,6 +50,11 @@ export default class Git {
         return new res.CONFIG_NOT_FOUND();
     }
 
+    async reset() {
+        await this.git.checkout('.');
+        this.checkout(uuid());
+    }
+
     async checkout(branchName) {
         await this.git.checkoutBranch(branchName, this.repoBranch);
     }

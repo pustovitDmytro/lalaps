@@ -104,7 +104,7 @@ async function executeAuditCommand({
     if (production) params.push('--only=prod');
 
     try {
-        // console.log('npm audit', params);
+        // console.log('npm audit', params.join(' '));
         const res = await execa('npm', [ 'audit', ...params ], { cwd });
 
         return res.stdout;
