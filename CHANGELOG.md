@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/pustovitDmytro/lalaps/compare/v1.2.0...v1.3.0) (2021-11-03)
+
+
+### New
+
+* adds info route ([dfc097d](https://github.com/pustovitDmytro/lalaps/commit/dfc097dfcefd3e7c10fb241dc029d7d28126c361))
+
 # [1.2.0](https://github.com/pustovitDmytro/lalaps/compare/v1.1.0...v1.2.0) (2021-11-03)
 
 
