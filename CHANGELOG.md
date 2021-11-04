@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/pustovitDmytro/lalaps/compare/v1.4.1...v1.4.2) (2021-11-04)
+
+
+### Fix
+
+* drop maintainer_can_modify from update PR ([dde2d48](https://github.com/pustovitDmytro/lalaps/commit/dde2d485229e76e717b85e4ebdcaa912fee20379))
+
 ## [1.4.1](https://github.com/pustovitDmytro/lalaps/compare/v1.4.0...v1.4.1) (2021-11-04)
 
 
