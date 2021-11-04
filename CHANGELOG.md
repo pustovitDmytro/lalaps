@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/pustovitDmytro/lalaps/compare/v1.4.2...v1.5.0) (2021-11-04)
+
+
+### New
+
+* recognize only mine PRs ([b80168e](https://github.com/pustovitDmytro/lalaps/commit/b80168e4197587e22426d07d5f99c5277915d1c1))
+
 ## [1.4.2](https://github.com/pustovitDmytro/lalaps/compare/v1.4.1...v1.4.2) (2021-11-04)
 
 
