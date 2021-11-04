@@ -38,7 +38,7 @@ export class GithubPlatform extends BasePlatform {
         const [ installation ] = await this.appAPI.listInstallations();
         const { token } = await this.appAPI.createAcessToken(installation.id);
 
-        this.api = new GithubReposAPI(token);
+        this.api = new GithubReposAPI(token, this.userId);
     }
 
     isRepoAnalizable(repo) {

@@ -30,7 +30,7 @@ function pullResponse(repo, index, data = {}) {
     return {
         id     : 99,
         number : index,
-        user   : { login: repo.owner, id: index },
+        user   : { login: repo.owner, id: 12_345_678 },
         title  : data.title || 'sell shape protection stared shown',
         body   : data.body || 'vegetable mark subject paid organized paragraph give earth beautiful bent feet climate die salt built tobacco lovely middle border',
         head   : {

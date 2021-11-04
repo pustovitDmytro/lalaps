@@ -18,9 +18,10 @@ class GITHUB_ERROR extends API_ERROR {
 }
 
 export default class GithubReposAPI extends BaseAPI {
-    constructor(token) {
+    constructor(token, userId) {
         super('https://api.github.com/');
         this.token = token;
+        this.userId = userId;
     }
 
     onError(error) {
@@ -87,9 +88,11 @@ export default class GithubReposAPI extends BaseAPI {
             state : 'all'
         });
 
-        if (list.length === 0) return null;
+        const mine = list.filter(pr => pr.user.id === this.userId);
 
-        const res = await this.get(`/repos/${repo.name}/pulls/${list[0].number}`);
+        if (mine.length === 0) return null;
+
+        const res = await this.get(`/repos/${repo.name}/pulls/${mine[0].number}`);
 
         return dumpPR(res);
     }
