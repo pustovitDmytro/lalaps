@@ -1,3 +1,14 @@
+## [1.4.1](https://github.com/pustovitDmytro/lalaps/compare/v1.4.0...v1.4.1) (2021-11-04)
+
+
+### Chore
+
+* ignore repo api from debt check ([11539be](https://github.com/pustovitDmytro/lalaps/commit/11539bea9248640a399bf79de5624ce23fd355c1))
+
+### Fix
+
+* adds describe advisory results ([899f525](https://github.com/pustovitDmytro/lalaps/commit/899f525e6330248286b2d750b15ef4615e194d32))
+
 # [1.4.0](https://github.com/pustovitDmytro/lalaps/compare/v1.3.0...v1.4.0) (2021-11-04)
 
 
