@@ -47,7 +47,7 @@ export class BaseRepo {
                     const r = await this.runAdvisory({ ...rule, ...config });
                     const progress = innerPn.calcArray(rules.length, ruleIndex++, 1);
 
-                    innerPn.progress(progress, `${rule.advisory} rule completed`);
+                    innerPn.progress(progress, `${rule.advisory} rule [${rule.branch}] completed`, r.describe);
 
                     results.push(r);
                 }
