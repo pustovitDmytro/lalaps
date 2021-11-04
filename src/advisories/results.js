@@ -1,8 +1,6 @@
-class AdvisoryResult {
-    constructor({ report } = {}) {
-        this.report = report;
-    }
-}
+import BaseResult from '../BaseResult';
+
+class AdvisoryResult extends BaseResult {}
 
 export class NOT_VULNERABLE extends AdvisoryResult {}
 export class FULL_FIX extends AdvisoryResult {}

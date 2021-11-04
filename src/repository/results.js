@@ -1,8 +1,6 @@
-class RepoResults {
-    constructor(payload) {
-        this.payload = payload;
-    }
-}
+import BaseResult from '../BaseResult';
+
+class RepoResults extends BaseResult {}
 
 export class VALID_CONFIG extends RepoResults {}
 export class INVALID_CONFIG extends RepoResults {}

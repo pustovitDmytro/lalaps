@@ -43,7 +43,7 @@ export class Templates {
         return `${base}\n${this.text(templateId)}`;
     }
 
-    extract(text, tag) {
+    extract(text, tag = 'Lalaps.description') {
         const startTag = `<!-- ${tag}:start -->`;
         const endTag = `<!-- ${tag}:end -->`;
         const startIndex = text.indexOf(startTag);

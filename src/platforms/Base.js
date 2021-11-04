@@ -2,12 +2,14 @@
 import Git from '../repository/Git';
 import * as repoRes from '../repository/results';
 import * as advRes from '../advisories/results';
-import templates from '../templates';
 import advisories from '../advisories';
+import templates from '../templates';
 import ProgressNotifier from '../ProgressNotifier';
+import { describeConfig } from '../repository/configUtils';
 import * as platfRes from './results';
 
 const CONFIGURATION_BRANCH = 'lalaps/configure';
+const CONFIG_FILE_NAME = '.lalapsrc.json';
 
 export class BaseRepo {
     constructor(repo) {
@@ -104,17 +106,38 @@ export class BaseRepo {
     }
 
     async handleBadConfig(onboardingPR) {
+        const config = await this.git.generateDefaultConfig();
+        const message = 'Chore: Configure Lalaps';
+
+        if (!config) {
+            if (onboardingPR.isOpen) {
+                const pr = await this.api.autoclosePR(this.repo, onboardingPR, {
+                    body : await templates.addText(onboardingPR.body, 'onboarding/no_advisory_found.md')
+                });
+
+                return new platfRes.ONBOARDING_PR_CLOSED(pr);
+            }
+
+            return new platfRes.NO_ADVISORY_FOUND();
+        }
+
+        const descriptions = await describeConfig(config);
+        const body = await templates.text('onboarding/onboarding_text.md', { descriptions });
+
         if (onboardingPR) {
             if (onboardingPR.isMerged || onboardingPR.isAutoClosed) {
                 await this.safeDropBranch(this.repo, onboardingPR.branch);
             }
 
             if (onboardingPR.isOpen) {
-                if (onboardingPR.isConflicted) {
-                    await this.git.uploadDefaultConfig(CONFIGURATION_BRANCH);
-                }
+                const refreshed = await this.refreshPR(onboardingPR, {
+                    body,
+                    message,
+                    force : onboardingPR.isConflicted,
+                    files : [ CONFIG_FILE_NAME ]
+                });
 
-                return new platfRes.ONBOARDING_PR_OPEN(onboardingPR);
+                return new platfRes.ONBOARDING_PR_OPEN(refreshed || onboardingPR);
             }
 
             if (onboardingPR.isClosed && !onboardingPR.isAutoClosed) {
@@ -122,11 +145,11 @@ export class BaseRepo {
             }
         }
 
-        await this.git.uploadDefaultConfig(CONFIGURATION_BRANCH);
+        await this.git.uploadFiles(CONFIGURATION_BRANCH, [ CONFIG_FILE_NAME ], message);
 
         const pr = await this.api.createPR(this.repo, {
             title : 'Configure Lalaps',
-            body  : await templates.text('onboarding/onboarding_text.md'),
+            body,
             head  : CONFIGURATION_BRANCH,
             base  : this.repo.branch
         });
@@ -145,20 +168,31 @@ export class BaseRepo {
         }
     }
 
+    async refreshPR(openPr, { body, files, message, force }) {
+        const prev = await templates.extract(openPr.body);
+        const next = await templates.extract(body);
+
+        if (force || prev !== next) {
+            await this.git.uploadFiles(openPr.branch, files, message);
+
+            return this.api.updatePR(this.repo, openPr, { body });
+        }
+    }
+
     async handleFixFound(advisory, config, res, { targetPr, targetBranch }) {
         const Advisory = advisory.constructor;
-        const { stats } = advisory.analizeReport(res.report);
-        const text = await templates.text(advisory.getPrTemplate(res), { stats });
+        const { stats } = advisory.analizeReport(res.payload);
+        const body = await templates.text(advisory.getPrTemplate(res), { stats });
+        const message = advisory.getCommitMessage(res);
 
         if (targetPr?.isOpen) {
-            const prev = await templates.extract(targetPr.body, 'Lalaps.description');
-            const next = await templates.extract(text, 'Lalaps.description');
+            const refreshed = await this.refreshPR(targetPr, {
+                body,
+                message,
+                files : Advisory.Files
+            });
 
-            if (prev !== next) {
-                const pr = await this.api.updatePR(this.repo, targetPr, { body: text });
-
-                return new platfRes.FIX_PR_OPEN(pr);
-            }
+            if (refreshed) return new platfRes.FIX_PR_OPEN(refreshed);
 
             if (config.automerge) {
                 const checks = await this.api.getChecks(this.repo, targetPr);
@@ -173,14 +207,12 @@ export class BaseRepo {
             return new platfRes.FIX_PR_OPEN(targetPr);
         }
 
-        const messsage = advisory.getCommitMessage(res);
-
-        await this.git.uploadFiles(targetBranch, Advisory.Files, messsage);
+        await this.git.uploadFiles(targetBranch, Advisory.Files, message);
 
         if (!targetPr?.isOpen) {
             const pr = await this.api.createPR(this.repo, {
-                title  : messsage,
-                body   : text,
+                title  : message,
+                body,
                 head   : targetBranch,
                 base   : this.repo.branch,
                 labels : config.labels

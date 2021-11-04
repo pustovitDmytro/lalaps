@@ -2,6 +2,12 @@ import execa from 'execa';
 import Advisory from './Base';
 
 export default class NPM extends Advisory {
+    constructor(conf) {
+        super(conf);
+        this._force = conf.force;
+        this._production = conf.production;
+    }
+
     async check() {
         const stdout = await executeAuditCommand({
             cwd : this._folder
@@ -51,14 +57,10 @@ export default class NPM extends Advisory {
 
     static Files = [ 'package.json', 'package-lock.json' ]
 
-    static branches = {
-        fix        : 'npm-fix',
-        partialFix : 'npm-partial-fix'
-    }
-
     static templates = {
-        prFix        : 'npm/full_fix.pr.md',
-        prPartialFix : 'npm/partial_fix.pr.md'
+        prFix         : 'npm/full_fix.pr.md',
+        prPartialFix  : 'npm/partial_fix.pr.md',
+        defaultConfig : 'onboarding/npm_default_config.json'
     }
 
     analizeReport(reports) {
@@ -72,6 +74,16 @@ export default class NPM extends Advisory {
         stats.rate = stats.fixed / stats.before;
 
         return { stats };
+    }
+
+    get describe() {
+        const messages = [ 'Vulnerabilities will be fixed using npm-audit command' ];
+
+        if (this._force) messages.push('--force: Removes various protections against unfortunate side effects, common mistakes, unnecessary performance degradation, and malicious input.\nNote: it is strongly recommended that you do not use this option with automerge');
+
+        if (this._production) messages.push('--production: Only production dependencies will be checked');
+
+        return [ ...super.describe, ...messages ];
     }
 }
 

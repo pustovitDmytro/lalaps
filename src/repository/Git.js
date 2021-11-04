@@ -3,11 +3,12 @@ import SimpleGit from 'simple-git';
 import fs from 'fs-extra';
 import { v4 as uuid } from 'uuid';
 import config from '../config';
+import { advisoryList } from '../advisories';
 import {
     createConfig,
     getConfig,
     validateConfig
-} from './utils';
+} from './configUtils';
 import * as res from './results';
 
 const CONFIG_FILE_NAME = '.lalapsrc.json';
@@ -53,10 +54,33 @@ export default class Git {
         await this.git.checkoutBranch(branchName, this.repoBranch);
     }
 
-    async uploadDefaultConfig(branchName) {
-        await createConfig(this.folder, CONFIG_FILE_NAME);
-        await this.uploadFiles(branchName, [ CONFIG_FILE_NAME ], 'Chore: Configure Lalaps');
+    async generateDefaultConfig() {
+        const detected = [];
+
+        await Promise.all(advisoryList.map(async adv => {
+            const promises = adv.Files.map(name => fs.exists(
+                path.join(this.folder, name)
+            ));
+            const exists = await Promise.all(promises);
+
+            if (exists.every(i => i)) {
+                detected.push(adv);
+            }
+        }));
+
+        if (detected.length > 0) {
+            return createConfig(
+                this.folder,
+                CONFIG_FILE_NAME,
+                detected.map(i => i.templates.defaultConfig)
+            );
+        }
     }
+
+    // async uploadDefaultConfig(branchName) {
+    //     await createConfig(this.folder, CONFIG_FILE_NAME);
+    //     await this.uploadFiles(branchName, [ CONFIG_FILE_NAME ], 'Chore: Configure Lalaps');
+    // }
 
     async uploadFiles(branchName, files, commitMessage) {
         await this.checkout(branchName);

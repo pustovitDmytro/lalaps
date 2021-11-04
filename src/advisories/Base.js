@@ -1,14 +1,25 @@
 import * as results from './results';
 
 export default class Advisory {
-    constructor({ advisory, folder, branchPrefix, commitMessagePartialFix, commitMessageFix  }) {
-        this._advisory = advisory;
-        this._folder = folder;
-        this._branchPrefix = branchPrefix;
+    constructor(config) {
+        this._advisory = config.advisory;
+        this._folder = config.folder;
+        this._branchPrefix = config.branchPrefix;
+        this._branchMid = config.branch;
         this._commitMessages = {
-            fix        : commitMessageFix,
-            partialFix : commitMessagePartialFix
+            fix        : config.commitMessageFix,
+            partialFix : config.commitMessagePartialFix
         };
+    }
+
+    get describe() {
+        const fix = new results.FULL_FIX();
+        const partFix = new results.PARTIAL_FIX();
+
+        return [
+            `Full fix will be pushed to "${this.getTragetBranch(fix)}" branch with commit message "${this.getCommitMessage(fix)}"`,
+            `Partial fix will be pushed to "${this.getTragetBranch(partFix)}" with commit message "${this.getCommitMessage(partFix)}"`
+        ];
     }
 
     async run() {
@@ -19,24 +30,24 @@ export default class Advisory {
         const after = await this.check();
         const { report, isFix, isPartialFix } = await this.compare(before, after);
 
-        if (isFix) return new results.FULL_FIX({ report });
-        if (isPartialFix) return new results.PARTIAL_FIX({ report });
+        if (isFix) return new results.FULL_FIX(report);
+        if (isPartialFix) return new results.PARTIAL_FIX(report);
 
-        return new results.NO_FIX({ report });
+        return new results.NO_FIX(report);
     }
 
     getTragetBranch(res) {
         const { fix, partialFix } = this.constructor.branches;
 
-        if (res instanceof results.PARTIAL_FIX) return `${this._branchPrefix}/${partialFix}`;
-        if (res instanceof results.FULL_FIX) return `${this._branchPrefix}/${fix}`;
+        if (res instanceof results.PARTIAL_FIX) return `${this._branchPrefix}/${this._branchMid}/${partialFix}`;
+        if (res instanceof results.FULL_FIX) return `${this._branchPrefix}/${this._branchMid}/${fix}`;
     }
 
     getConcurentBranch(res) {
         const { fix, partialFix } = this.constructor.branches;
 
-        if (res instanceof results.FULL_FIX) return `${this._branchPrefix}/${partialFix}`;
-        if (res instanceof results.PARTIAL_FIX) return `${this._branchPrefix}/${fix}`;
+        if (res instanceof results.FULL_FIX) return `${this._branchPrefix}/${this._branchMid}/${partialFix}`;
+        if (res instanceof results.PARTIAL_FIX) return `${this._branchPrefix}/${this._branchMid}/${fix}`;
     }
 
     getPrTemplate(res) {
@@ -49,5 +60,10 @@ export default class Advisory {
     getCommitMessage(res) {
         if (res instanceof results.PARTIAL_FIX) return this._commitMessages.partialFix;
         if (res instanceof results.FULL_FIX) return this._commitMessages.fix;
+    }
+
+    static branches = {
+        fix        : 'fix',
+        partialFix : 'partial-fix'
     }
 }

@@ -3,6 +3,7 @@ import { createBullBoard } from '@bull-board/api';
 import { BullAdapter } from '@bull-board/api/bullAdapter';
 import { ExpressAdapter } from '@bull-board/express';
 import packageInfo from '../package.json';
+import logger from './logger';
 
 import Queue from './Queue';
 import config from './config';
@@ -30,7 +31,7 @@ if (config.web.start) {
     server = app.listen(config.web.port, () => {
         const { port } = server.address();
 
-        console.log(`WEB STARTING AT PORT ${port}`);
+        logger.info(`WEB STARTING AT PORT ${port}`);
     });
 }
 

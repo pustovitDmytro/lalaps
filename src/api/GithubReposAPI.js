@@ -160,8 +160,6 @@ export default class GithubReposAPI extends BaseAPI {
     async getBranch(repo, name) {
         const res = await this.get(`/repos/${repo.name}/branches/${name}`);
 
-        console.log('res:', res);
-
         return dumpBranch(res);
     }
 }
