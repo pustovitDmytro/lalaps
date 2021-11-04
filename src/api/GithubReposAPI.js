@@ -1,3 +1,4 @@
+/* jscpd:ignore-start */
 import BaseAPI, { API_ERROR } from 'base-api-client';
 
 class GITHUB_ERROR extends API_ERROR {
@@ -238,3 +239,5 @@ function dumpCheck(c) {
         isSucceeded : c.status === 'completed' && c.conclusion === 'success'
     };
 }
+
+/* jscpd:ignore-end */

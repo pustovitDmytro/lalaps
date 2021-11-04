@@ -1,3 +1,5 @@
+/* jscpd:ignore-start */
+
 import BaseAPI from 'base-api-client';
 
 export default class GiteaAPI extends BaseAPI {
@@ -101,3 +103,5 @@ function dumpPR(p) {
         isAutoClosed : isClosed && p.title.includes('- autoclosed')
     };
 }
+
+/* jscpd:ignore-end */
