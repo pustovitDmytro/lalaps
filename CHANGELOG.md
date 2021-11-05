@@ -1,3 +1,18 @@
+## [1.6.1](https://github.com/pustovitDmytro/lalaps/compare/v1.6.0...v1.6.1) (2021-11-05)
+
+
+### Chore
+
+* fixes some npm audit vulnerabilities (#18) ([49d43f5](https://github.com/pustovitDmytro/lalaps/commit/49d43f5bf82ee693e878cb6d61748e93482e0943)), closes [#18](https://github.com/pustovitDmytro/lalaps/issues/18)
+
+### Docs
+
+* adds codacy badge ([95fd8b1](https://github.com/pustovitDmytro/lalaps/commit/95fd8b1da04ba250a2c2db36cb6a3b3554a7a9a3))
+
+### Fix
+
+* adds several results to jeneral job result ([3f4e768](https://github.com/pustovitDmytro/lalaps/commit/3f4e768d06990b94176a10e0fc6bde70da31b87a))
+
 # [1.6.0](https://github.com/pustovitDmytro/lalaps/compare/v1.5.1...v1.6.0) (2021-11-05)
 
 
