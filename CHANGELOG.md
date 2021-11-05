@@ -1,3 +1,16 @@
+# [1.6.0](https://github.com/pustovitDmytro/lalaps/compare/v1.5.1...v1.6.0) (2021-11-05)
+
+
+### Fix
+
+* handle NO_ADVISORY_FOUND when no pr present ([99ade04](https://github.com/pustovitDmytro/lalaps/commit/99ade047d63d1b82f1fba89be0cb9309913cde71))
+* keep PATH env in execa call ([4785997](https://github.com/pustovitDmytro/lalaps/commit/478599721d5147231ab64dba76412e3c027e00b8))
+* not extend the environment variables in npm audit ([a2dbcaa](https://github.com/pustovitDmytro/lalaps/commit/a2dbcaa8af3e799916997254767da708efa6242e))
+
+### New
+
+* additional logs for second attempts ([f1eee3c](https://github.com/pustovitDmytro/lalaps/commit/f1eee3cffa69fbf5201818e18366e6397358eeac))
+
 ## [1.5.1](https://github.com/pustovitDmytro/lalaps/compare/v1.5.0...v1.5.1) (2021-11-04)
 
 
