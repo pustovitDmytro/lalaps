@@ -1,4 +1,5 @@
 /* eslint-disable unicorn/filename-case */
+import { isArray } from 'myrmidon';
 import platforms from '../platforms';
 
 export default async function (job) {
@@ -10,5 +11,7 @@ export default async function (job) {
     const runner = await platform.getRepo(repo.name);
     const result = await runner.analize();
 
-    return result.describe;
+    return isArray(result)
+        ? result.map(r => r.describe)
+        : result.describe;
 }
