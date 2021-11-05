@@ -62,6 +62,13 @@ export default class Advisory {
         if (res instanceof results.FULL_FIX) return this._commitMessages.fix;
     }
 
+    getAutoCloseReason(res) {
+        const { alreadyFixed, noFix } = this.constructor.templates;
+
+        if (res instanceof results.NOT_VULNERABLE) return alreadyFixed;
+        if (res instanceof results.NO_FIX) return noFix;
+    }
+
     static branches = {
         fix        : 'fix',
         partialFix : 'partial-fix'

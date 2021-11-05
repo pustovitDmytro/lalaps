@@ -237,12 +237,12 @@ export class BaseRepo {
             this.api.findPR(this.repo, concurentBranch)
         ]);
 
-        if (res instanceof advRes.NOT_VULNERABLE) {
+        if (res instanceof advRes.NOT_VULNERABLE || res instanceof advRes.NO_FIX) {
             await Promise.all(
                 [ targetPr, concurentPr ]
                     .filter(pr => pr?.isOpen)
                     .map(async pr => {
-                        const body = await templates.addText(pr.body, 'already_fixed.md');
+                        const body = await templates.addText(pr.body, advisory.getAutoCloseReason(res));
 
                         return this.api.autoclosePR(this.repo, pr, { body });
                     })

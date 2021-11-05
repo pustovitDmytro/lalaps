@@ -63,7 +63,10 @@ export default class NPM extends Advisory {
     static templates = {
         prFix         : 'npm/full_fix.pr.md',
         prPartialFix  : 'npm/partial_fix.pr.md',
-        defaultConfig : 'onboarding/npm_default_config.json'
+        defaultConfig : 'onboarding/npm_default_config.json',
+
+        alreadyFixed : 'already_fixed.md',
+        noFix        : 'no_fix.md'
     }
 
     analizeReport(reports) {
