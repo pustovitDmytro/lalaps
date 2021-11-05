@@ -1,4 +1,5 @@
 import execa from 'execa';
+import logger from '../logger';
 import Advisory from './Base';
 
 export default class NPM extends Advisory {
@@ -104,16 +105,21 @@ async function executeAuditCommand({
     if (production) params.push('--only=prod');
 
     try {
-        // console.log('npm audit', params.join(' '));
+        logger.verbose({ command: 'npm audit', params });
         const res = await execa('npm', [ 'audit', ...params ], {
             cwd,
             extendEnv : false,
-            env       : {}
+            env       : { PATH: process.env.PATH }
         });
 
         return res.stdout;
-    } catch (error) { // TODO: properly handle error signals
-        return error.stdout;
+    } catch (error) {
+        if (error.exitCode === 1) {
+            return error.stdout;
+        }
+
+        logger.error({ code: 'NPM_AUDIT_ERROR', error });
+        throw error;
     }
 }
 
