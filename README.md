@@ -84,7 +84,7 @@ Make the changes to the code and tests. Then commit to your branch. Be sure to f
 [lgtm-alerts-badge]: https://img.shields.io/lgtm/alerts/g/pustovitDmytro/lalaps.svg?logo=lgtm&logoWidth=18
 [lgtm-alerts-url]: https://lgtm.com/projects/g/pustovitDmytro/lalaps/alerts/
 
-[codacy-badge]: https://app.codacy.com/project/badge/Grade/8667aa23afaa4725854f098c4b5e8890
+[codacy-badge]: https://app.codacy.com/project/badge/Grade/2404d416834e4700961f4edb1c025b47
 [codacy-url]: https://www.codacy.com/gh/pustovitDmytro/lalaps/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=pustovitDmytro/lalaps&amp;utm_campaign=Badge_Grade
 
 [sonarcloud-badge]: https://sonarcloud.io/api/project_badges/measure?project=pustovitDmytro_lalaps&metric=alert_status
