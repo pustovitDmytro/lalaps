@@ -110,7 +110,7 @@ export class BaseRepo {
         const message = 'Chore: Configure Lalaps';
 
         if (!config) {
-            if (onboardingPR.isOpen) {
+            if (onboardingPR?.isOpen) {
                 const pr = await this.api.autoclosePR(this.repo, onboardingPR, {
                     body : await templates.addText(onboardingPR.body, 'onboarding/no_advisory_found.md')
                 });
