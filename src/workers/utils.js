@@ -21,6 +21,8 @@ export function getJobRunner(runner, { level, name }) {
                 });
 
                 try {
+                    if (job.attemptsMade) job.log(`Starting attempt ${job.attemptsMade + 1}`);
+                    job.progress(0);
                     const res = await runner(job);
 
                     job.progress(100); // eslint-disable-line no-magic-numbers

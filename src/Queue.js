@@ -82,7 +82,7 @@ export default class Queue {
 
         const job = await this.queue.add(type, data, {
             timeout : this.ttl,
-            backoff : {
+            backoff : this.backoff && {
                 type  : this.backoff.type,
                 delay : this.backoff.delay
             },
