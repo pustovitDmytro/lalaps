@@ -105,7 +105,11 @@ async function executeAuditCommand({
 
     try {
         // console.log('npm audit', params.join(' '));
-        const res = await execa('npm', [ 'audit', ...params ], { cwd });
+        const res = await execa('npm', [ 'audit', ...params ], {
+            cwd,
+            extendEnv : false,
+            env       : {}
+        });
 
         return res.stdout;
     } catch (error) { // TODO: properly handle error signals
