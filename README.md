@@ -42,14 +42,40 @@ Package is [continuously tested][appveyor-url] on darwin, linux, win32 platforms
 To install the library run the following command
 
 ```bash
-  npm i --save lalaps
+  npm i -g lalaps
 ```
 
 ## Usage
 
-```javascript
-
+Run Web interface:
+```bash
+  node lib/web.js
 ```
+
+Start the main worker:
+```bash
+node ./lib/bin/worker.js start
+```
+
+### GitHub: 
+  1. analyze individual repository:
+
+```bash
+  node github.js analyze-repository <repository>
+```
+
+where `<repository>` is **full** GitHub repo name in form `{owner}/{name}`.
+
+2. analyze all repositories
+```bash
+  node github.js start [<repositories>]
+```
+
+where `<repositories>` are `,` separated list of full names in form of `{owner}/{name}`.
+
+## Configuration
+
+For now, the configuration can be passed only using environment variables. A list of variables with default values can be found in the [.env.defaults](/.env.defaults) file.
 
 ## Contribute
 
