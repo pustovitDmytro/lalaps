@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/pustovitDmytro/lalaps/compare/v1.7.0...v1.7.1) (2021-11-16)
+
+
+### Docs
+
+* adds basic readme ([f70eac1](https://github.com/pustovitDmytro/lalaps/commit/f70eac1aa1c05f21ae845316e0c3d0c9e03280b7))
+
 # [1.7.0](https://github.com/pustovitDmytro/lalaps/compare/v1.6.1...v1.7.0) (2021-11-05)
 
 
