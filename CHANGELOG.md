@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/pustovitDmytro/lalaps/compare/v1.6.1...v1.7.0) (2021-11-05)
+
+
+### New
+
+* autoclose PRs if no fix can be made ([d614e18](https://github.com/pustovitDmytro/lalaps/commit/d614e184f21e8958bf267993a8c77f63675baf3e))
+
 ## [1.6.1](https://github.com/pustovitDmytro/lalaps/compare/v1.6.0...v1.6.1) (2021-11-05)
 
 
