@@ -8,7 +8,7 @@ const github = new GithubPlatform(config.github);
 
 
 const doc = `Usage:
-    github.js analize-repository <repository>
+    github.js analyze-repository <repository>
     github.js start [<repositories>]
     github.js -h | --help
 
@@ -16,24 +16,24 @@ const doc = `Usage:
         -h  --help      GitHub Runner
 `;
 
-async function analizeRepository(opts) {
+async function analyzeRepository(opts) {
     const repo = await github.getRepo(opts['<repository>']);
 
-    const result = await repo.analize();
+    const result = await repo.analyze();
 
-    console.log('analizeRepository:', result);
+    console.log('analyzeRepository:', result);
 }
 
 async function start(opts) {
     const filter = opts['<repositories>'] && opts['<repositories>'].split(',');
-    const result = await github.analize({ filter });
+    const result = await github.analyze({ filter });
 
     console.log('start:', result.map(r => r.name));
 }
 
 async function run(opts) {
-    if (opts['analize-repository']) {
-        await analizeRepository(opts);
+    if (opts['analyze-repository']) {
+        await analyzeRepository(opts);
     }
 
     if (opts.start) {

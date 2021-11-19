@@ -15,12 +15,12 @@ const config = {
             appID         : +e.GITHUB_APP_ID
         },
         userId  : +e.GITHUB_USER_ID,
-        analize : true
+        analyze : true
     },
     gitea : {
         url     : new URL(e.GITEA_URL),
         token   : e.GITEA_TOKEN,
-        analize : false
+        analyze : false
     },
     git : {
         tmpFolder : e.TMP_FOLDER,

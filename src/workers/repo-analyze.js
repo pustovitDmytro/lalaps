@@ -9,7 +9,7 @@ export default async function (job) {
     if (!platform) throw new Error(`platform '${platformName}' not found`);
 
     const runner = await platform.getRepo(repo.name);
-    const result = await runner.analize();
+    const result = await runner.analyze();
 
     return isArray(result)
         ? result.map(r => r.describe)

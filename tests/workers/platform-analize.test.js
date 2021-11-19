@@ -6,9 +6,9 @@ import { Job } from '../mock/Job';
 import seedRepositories from '../mock/seeds/repositories.json';
 
 const factory = new Test();
-const handler = load('workers/platform-analize.js').default;
+const handler = load('workers/platform-analyze.js').default;
 
-suite('Workers: platform-analize #redis');
+suite('Workers: platform-analyze #redis');
 
 before(async function () {
     mockAPI();

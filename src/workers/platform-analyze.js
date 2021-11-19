@@ -2,13 +2,13 @@
 import Queue from '../Queue';
 import config from '../config';
 import platforms from '../platforms';
-import repoHandler from './repo-analize';
+import repoHandler from './repo-analyze';
 
 const repoQueue = new Queue({
     ...config.queue.repo,
     redis : config.queue.redis
 }, {
-    ANALIZE_REPOSITORY : repoHandler
+    ANALYZE_REPOSITORY : repoHandler
 });
 
 export default async function (job) {
@@ -19,7 +19,7 @@ export default async function (job) {
     if (!platform) throw new Error(`platform '${platformName}' not found`);
 
     const [ repositories, pendingJobs ] = await Promise.all([
-        platform.analize({}),
+        platform.analyze({}),
         repoQueue.findPendingJobs()
     ]);
 
@@ -29,7 +29,7 @@ export default async function (job) {
 
     repositories.forEach(repo => {
         repoQueue.createJob(
-            'ANALIZE_REPOSITORY',
+            'ANALYZE_REPOSITORY',
             { repo, platformName }
         );
     });

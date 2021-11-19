@@ -24,7 +24,7 @@ before(async function () {
 
 test('VALID_CONFIG + FULL_FIX #npm', async function () {
     const repo = await github.getRepo(`${fullFix.owner}/${fullFix.repository}`);
-    const results = await repo.analize();
+    const results = await repo.analyze();
 
     assert.lengthOf(results, 2);
     const [ prod, dev ] = results;
@@ -39,7 +39,7 @@ test('VALID_CONFIG + FULL_FIX #npm', async function () {
 test('PARTIAL_FIX + openPr #npm', async function () {
     const repo = await github.getRepo(`${partFix.owner}/${partFix.repository}`);
 
-    const results = await repo.analize();
+    const results = await repo.analyze();
 
     assert.lengthOf(results, 1);
     const [ result ] = results;
@@ -49,7 +49,7 @@ test('PARTIAL_FIX + openPr #npm', async function () {
 
 test('NOT_VULNERABLE + Pr open #npm', async function () {
     const repo = await github.getRepo(`${notVuln.owner}/${notVuln.repository}`);
-    const results = await repo.analize();
+    const results = await repo.analyze();
 
     assert.lengthOf(results, 2);
 

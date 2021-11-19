@@ -22,14 +22,14 @@ before(async function () {
 
 test('Repo without config', async function () {
     const repo = await github.getRepo(`${noConf.owner}/${noConf.repository}`);
-    const result = await repo.analize();
+    const result = await repo.analyze();
 
     assert.equal(result.constructor.name, 'ONBOARDING_PR_OPEN');
 });
 
 test('Clear PR after config stabilized', async function () {
     const repo = await github.getRepo(`${clearPR.owner}/${clearPR.repository}`);
-    const result = await repo.analize();
+    const result = await repo.analyze();
 
     assert.equal(result.constructor.name, 'ONBOARDING_PR_CLOSED');
 });

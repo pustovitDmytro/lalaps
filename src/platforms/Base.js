@@ -16,7 +16,7 @@ export class BaseRepo {
         this.repo = repo;
     }
 
-    async analize() {
+    async analyze() {
         const pn = new ProgressNotifier([ 0.1, 0.9 ]);
         const repoName = this.repo.name;
 
@@ -45,6 +45,7 @@ export class BaseRepo {
                 for (const rule of rules) {
                     const innerPn = new ProgressNotifier([ 0.5, 0.95 ], pn);
                     const r = await this.runAdvisory({ ...rule, ...config });
+
                     const progress = innerPn.calcArray(rules.length, ruleIndex++, 1);
 
                     innerPn.progress(progress, `${rule.advisory} rule [${rule.branch}] completed`, r.describe);
@@ -261,7 +262,7 @@ export class BaseRepo {
 
 export class BasePlatform {
     constructor(config) {
-        this.shouldAnalize = config.analize;
+        this.shouldAnalize = config.analyze;
     }
 
     isRepoAnalizable() {
@@ -293,7 +294,7 @@ export class BasePlatform {
         return repo;
     }
 
-    async analize({ filter }) {
+    async analyze({ filter }) {
         const pn = new ProgressNotifier();
 
         await this.autorize();

@@ -2,13 +2,13 @@ import platforms from '../platforms';
 import Queue from '../Queue';
 import config from '../config';
 import logger from '../logger';
-import platformHandler from './platform-analize';
+import platformHandler from './platform-analyze';
 
 const mainQueue = new Queue({
     ...config.queue.main,
     redis : config.queue.redis
 }, {
-    ANALIZE_PLATFORM : platformHandler
+    ANALYZE_PLATFORM : platformHandler
 });
 
 export default async function () {
@@ -17,7 +17,7 @@ export default async function () {
     for (const platform of platforms) {
         if (platform.shouldAnalize) {
             const job = await mainQueue.createJob(
-                'ANALIZE_PLATFORM',
+                'ANALYZE_PLATFORM',
                 {
                     platformName : platform.constructor.name
                 }
@@ -29,7 +29,7 @@ export default async function () {
             };
 
             logger.log('info', {
-                type : 'ANALIZE_PLATFORM',
+                type : 'ANALYZE_PLATFORM',
                 ...result
             });
             res.push(result);

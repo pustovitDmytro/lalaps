@@ -7,9 +7,9 @@ import seedRepositories from '../mock/seeds/repositories.json';
 
 const repo = seedRepositories[0];
 const factory = new Test();
-const handler = load('workers/repo-analize.js').default;
+const handler = load('workers/repo-analyze.js').default;
 
-suite('Workers: repo-analize #redis');
+suite('Workers: repo-analyze #redis');
 
 before(async function () {
     mockAPI();

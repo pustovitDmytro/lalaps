@@ -38,7 +38,7 @@ aliases:
     name: Install fossa
     command: | 
           curl -H 'Cache-Control: no-cache' https://raw.githubusercontent.com/fossas/fossa-cli/master/install.sh | bash
-  - &fossa-analize
+  - &fossa-analyze
     name: Send package to fossa
     command: fossa analyze
   - &fossa-test
@@ -105,7 +105,7 @@ jobs:
           condition:
             not: << pipeline.parameters.skip-fossa >>
           steps:
-            - run: *fossa-analize
+            - run: *fossa-analyze
       - save_cache: *cache-modules
   test-security:
     <<: *defaults

@@ -18,7 +18,7 @@ before(async function () {
 
 test('Repo without config', async function () {
     const repo = await gitea.getRepo(`${noConf.owner}/${noConf.repository}`);
-    const result = await repo.analize();
+    const result = await repo.analyze();
 
     assert.equal(result.constructor.name, 'ONBOARDING_PR_OPEN');
 });
