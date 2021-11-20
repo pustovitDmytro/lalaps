@@ -1,0 +1,191 @@
+{
+    "actions": [
+      {
+        "action": "review",
+        "module": "jsonpointer",
+        "resolves": [
+          {
+            "id": 1004869,
+            "path": "danger>jsonpointer",
+            "dev": true,
+            "optional": false,
+            "bundled": false
+          }
+        ]
+      },
+      {
+        "action": "review",
+        "module": "ansi-regex",
+        "resolves": [
+          {
+            "id": 1004946,
+            "path": "semantic-release>@semantic-release/npm>npm>cli-columns>string-width>strip-ansi>ansi-regex",
+            "dev": true,
+            "optional": false,
+            "bundled": true
+          },
+          {
+            "id": 1004946,
+            "path": "semantic-release>@semantic-release/npm>npm>npmlog>gauge>string-width>strip-ansi>ansi-regex",
+            "dev": true,
+            "optional": false,
+            "bundled": true
+          },
+          {
+            "id": 1004946,
+            "path": "semantic-release>@semantic-release/npm>npm>npmlog>gauge>wide-align>string-width>strip-ansi>ansi-regex",
+            "dev": true,
+            "optional": false,
+            "bundled": true
+          },
+          {
+            "id": 1004946,
+            "path": "semantic-release>@semantic-release/npm>npm>node-gyp>npmlog>gauge>wide-align>string-width>strip-ansi>ansi-regex",
+            "dev": true,
+            "optional": false,
+            "bundled": true
+          },
+          {
+            "id": 1004946,
+            "path": "semantic-release>@semantic-release/npm>npm>@npmcli/run-script>node-gyp>npmlog>gauge>wide-align>string-width>strip-ansi>ansi-regex",
+            "dev": true,
+            "optional": false,
+            "bundled": true
+          },
+          {
+            "id": 1004946,
+            "path": "semantic-release>@semantic-release/npm>npm>pacote>@npmcli/run-script>node-gyp>npmlog>gauge>wide-align>string-width>strip-ansi>ansi-regex",
+            "dev": true,
+            "optional": false,
+            "bundled": true
+          },
+          {
+            "id": 1004946,
+            "path": "semantic-release>@semantic-release/npm>npm>@npmcli/arborist>pacote>@npmcli/run-script>node-gyp>npmlog>gauge>wide-align>string-width>strip-ansi>ansi-regex",
+            "dev": true,
+            "optional": false,
+            "bundled": true
+          },
+          {
+            "id": 1004946,
+            "path": "semantic-release>@semantic-release/npm>npm>@npmcli/arborist>@npmcli/metavuln-calculator>pacote>@npmcli/run-script>node-gyp>npmlog>gauge>wide-align>string-width>strip-ansi>ansi-regex",
+            "dev": true,
+            "optional": false,
+            "bundled": true
+          },
+          {
+            "id": 1004946,
+            "path": "semantic-release>@semantic-release/npm>npm>libnpmexec>@npmcli/arborist>@npmcli/metavuln-calculator>pacote>@npmcli/run-script>node-gyp>npmlog>gauge>wide-align>string-width>strip-ansi>ansi-regex",
+            "dev": true,
+            "optional": false,
+            "bundled": true
+          },
+          {
+            "id": 1004946,
+            "path": "semantic-release>@semantic-release/npm>npm>cli-table3>string-width>strip-ansi>ansi-regex",
+            "dev": true,
+            "optional": false,
+            "bundled": true
+          }
+        ]
+      }
+    ],
+    "advisories": {
+      "1004869": {
+        "findings": [
+          {
+            "version": "4.1.0",
+            "paths": [
+              "danger>jsonpointer"
+            ]
+          }
+        ],
+        "metadata": null,
+        "vulnerable_versions": "<5.0.0",
+        "module_name": "jsonpointer",
+        "severity": "moderate",
+        "github_advisory_id": "GHSA-282f-qqgm-c34q",
+        "cves": [
+          "CVE-2021-23807"
+        ],
+        "access": "public",
+        "patched_versions": ">=5.0.0",
+        "updated": "2021-11-04T16:58:08.000Z",
+        "recommendation": "Upgrade to version 5.0.0 or later",
+        "cwe": "CWE-843",
+        "found_by": null,
+        "deleted": null,
+        "id": 1004869,
+        "references": "- https://nvd.nist.gov/vuln/detail/CVE-2021-23807\n- https://github.com/janl/node-jsonpointer/pull/51\n- https://github.com/janl/node-jsonpointer/commit/a0345f3550cd9c4d89f33b126390202b89510ad4\n- https://snyk.io/vuln/SNYK-JS-JSONPOINTER-1577288\n- https://github.com/advisories/GHSA-282f-qqgm-c34q",
+        "created": "2021-11-18T16:00:48.459Z",
+        "reported_by": null,
+        "title": "Prototype Pollution in node-jsonpointer",
+        "npm_advisory_id": null,
+        "overview": "This affects the package `jsonpointer` before `5.0.0`. A type confusion vulnerability can lead to a bypass of a previous Prototype Pollution fix when the pointer components are arrays.",
+        "url": "https://github.com/advisories/GHSA-282f-qqgm-c34q"
+      },
+      "1004946": {
+        "findings": [
+          {
+            "version": "3.0.0",
+            "paths": [
+              "semantic-release>@semantic-release/npm>npm>cli-columns>string-width>strip-ansi>ansi-regex",
+              "semantic-release>@semantic-release/npm>npm>npmlog>gauge>string-width>strip-ansi>ansi-regex",
+              "semantic-release>@semantic-release/npm>npm>npmlog>gauge>wide-align>string-width>strip-ansi>ansi-regex",
+              "semantic-release>@semantic-release/npm>npm>node-gyp>npmlog>gauge>wide-align>string-width>strip-ansi>ansi-regex",
+              "semantic-release>@semantic-release/npm>npm>@npmcli/run-script>node-gyp>npmlog>gauge>wide-align>string-width>strip-ansi>ansi-regex",
+              "semantic-release>@semantic-release/npm>npm>pacote>@npmcli/run-script>node-gyp>npmlog>gauge>wide-align>string-width>strip-ansi>ansi-regex",
+              "semantic-release>@semantic-release/npm>npm>@npmcli/arborist>pacote>@npmcli/run-script>node-gyp>npmlog>gauge>wide-align>string-width>strip-ansi>ansi-regex",
+              "semantic-release>@semantic-release/npm>npm>@npmcli/arborist>@npmcli/metavuln-calculator>pacote>@npmcli/run-script>node-gyp>npmlog>gauge>wide-align>string-width>strip-ansi>ansi-regex",
+              "semantic-release>@semantic-release/npm>npm>libnpmexec>@npmcli/arborist>@npmcli/metavuln-calculator>pacote>@npmcli/run-script>node-gyp>npmlog>gauge>wide-align>string-width>strip-ansi>ansi-regex"
+            ]
+          },
+          {
+            "version": "5.0.0",
+            "paths": [
+              "semantic-release>@semantic-release/npm>npm>cli-table3>string-width>strip-ansi>ansi-regex"
+            ]
+          }
+        ],
+        "metadata": null,
+        "vulnerable_versions": ">2.1.1 <5.0.1",
+        "module_name": "ansi-regex",
+        "severity": "moderate",
+        "github_advisory_id": "GHSA-93q8-gq69-wqmw",
+        "cves": [
+          "CVE-2021-3807"
+        ],
+        "access": "public",
+        "patched_versions": ">=5.0.1",
+        "updated": "2021-09-23T15:45:50.000Z",
+        "recommendation": "Upgrade to version 5.0.1 or later",
+        "cwe": "CWE-918",
+        "found_by": null,
+        "deleted": null,
+        "id": 1004946,
+        "references": "- https://nvd.nist.gov/vuln/detail/CVE-2021-3807\n- https://github.com/chalk/ansi-regex/commit/8d1d7cdb586269882c4bdc1b7325d0c58c8f76f9\n- https://huntr.dev/bounties/5b3cf33b-ede0-4398-9974-800876dfd994\n- https://github.com/chalk/ansi-regex/issues/38#issuecomment-924086311\n- https://app.snyk.io/vuln/SNYK-JS-ANSIREGEX-1583908\n- https://github.com/chalk/ansi-regex/issues/38#issuecomment-925924774\n- https://github.com/advisories/GHSA-93q8-gq69-wqmw",
+        "created": "2021-11-18T16:00:48.472Z",
+        "reported_by": null,
+        "title": " Inefficient Regular Expression Complexity in chalk/ansi-regex",
+        "npm_advisory_id": null,
+        "overview": "ansi-regex is vulnerable to Inefficient Regular Expression Complexity",
+        "url": "https://github.com/advisories/GHSA-93q8-gq69-wqmw"
+      }
+    },
+    "muted": [],
+    "metadata": {
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 11,
+        "high": 0,
+        "critical": 0
+      },
+      "dependencies": 220,
+      "devDependencies": 1370,
+      "optionalDependencies": 6,
+      "totalDependencies": 1590
+    },
+    "runId": "dfd87958-c93d-4dc2-b3f5-7afaa6d67b72"
+  }
+  

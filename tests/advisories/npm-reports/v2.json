@@ -1,0 +1,137 @@
+{
+    "auditReportVersion": 2,
+    "vulnerabilities": {
+      "csv": {
+        "name": "csv",
+        "severity": "high",
+        "isDirect": true,
+        "via": [
+          "csv-parse"
+        ],
+        "effects": [],
+        "range": "0.4.2 - 4.0.0",
+        "nodes": [
+          "node_modules/csv"
+        ],
+        "fixAvailable": {
+          "name": "csv",
+          "version": "6.0.4",
+          "isSemVerMajor": true
+        }
+      },
+      "csv-parse": {
+        "name": "csv-parse",
+        "severity": "high",
+        "isDirect": true,
+        "via": [
+          {
+            "source": 1006254,
+            "name": "csv-parse",
+            "dependency": "csv-parse",
+            "title": "Regular Expression Denial of Service in csv-parse",
+            "url": "https://github.com/advisories/GHSA-582f-p4pg-xc74",
+            "severity": "high",
+            "range": "<4.4.6"
+          }
+        ],
+        "effects": [
+          "csv"
+        ],
+        "range": "<4.4.6",
+        "nodes": [
+          "node_modules/csv-parse"
+        ],
+        "fixAvailable": {
+          "name": "csv-parse",
+          "version": "5.0.3",
+          "isSemVerMajor": true
+        }
+      },
+      "glob-parent": {
+        "name": "glob-parent",
+        "severity": "high",
+        "isDirect": false,
+        "via": [
+          {
+            "source": 1005154,
+            "name": "glob-parent",
+            "dependency": "glob-parent",
+            "title": "Regular expression denial of service",
+            "url": "https://github.com/advisories/GHSA-ww39-953v-wcq6",
+            "severity": "high",
+            "range": "<5.1.2"
+          }
+        ],
+        "effects": [
+          "glob-stream"
+        ],
+        "range": "<5.1.2",
+        "nodes": [
+          "node_modules/glob-parent"
+        ],
+        "fixAvailable": {
+          "name": "glob-stream",
+          "version": "7.0.0",
+          "isSemVerMajor": true
+        }
+      },
+      "glob-stream": {
+        "name": "glob-stream",
+        "severity": "high",
+        "isDirect": true,
+        "via": [
+          "glob-parent"
+        ],
+        "effects": [],
+        "range": "5.3.0 - 6.1.0",
+        "nodes": [
+          "node_modules/glob-stream"
+        ],
+        "fixAvailable": {
+          "name": "glob-stream",
+          "version": "7.0.0",
+          "isSemVerMajor": true
+        }
+      },
+      "jn_jj_server": {
+        "name": "jn_jj_server",
+        "severity": "high",
+        "isDirect": true,
+        "via": [
+          {
+            "source": 1005832,
+            "name": "jn_jj_server",
+            "dependency": "jn_jj_server",
+            "title": "Directory Traversal in jn_jj_server",
+            "url": "https://github.com/advisories/GHSA-79p8-4cwq-rhqh",
+            "severity": "high",
+            "range": "<=0.0.8"
+          }
+        ],
+        "effects": [],
+        "range": "*",
+        "nodes": [
+          "node_modules/jn_jj_server"
+        ],
+        "fixAvailable": false
+      }
+    },
+    "metadata": {
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 0,
+        "high": 5,
+        "critical": 0,
+        "total": 5
+      },
+      "dependencies": {
+        "prod": 51,
+        "dev": 0,
+        "optional": 0,
+        "peer": 0,
+        "peerOptional": 0,
+        "total": 50
+      }
+    }
+  }

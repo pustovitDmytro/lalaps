@@ -91,6 +91,14 @@ export default class NPM extends Advisory {
 
         return [ ...super.describe, ...messages ];
     }
+
+    static parseReport(report) {
+        const v2 = 2;
+
+        if (report.auditReportVersion === v2) return parseAuditReportV2(report);
+
+        return parseLegacyReport(report);
+    }
 }
 
 async function executeAuditCommand({
@@ -100,7 +108,7 @@ async function executeAuditCommand({
     json = true,
     production
 }) {
-    const params = [ ];
+    const params = [ '--audit-level=none' ];
 
     if (fix) params.push('fix');
     if (json) params.push('--json');
@@ -117,10 +125,6 @@ async function executeAuditCommand({
 
         return res.stdout;
     } catch (error) {
-        if (error.exitCode === 1) {
-            return error.stdout;
-        }
-
         logger.error({ code: 'NPM_AUDIT_ERROR', error });
         throw error;
     }
@@ -128,4 +132,116 @@ async function executeAuditCommand({
 
 function sum(array) {
     return array.reduce((prev, curr) => prev + curr, 0);
+}
+
+function summarize(obj) {
+    const { total, ...categories } = obj;
+
+    return {
+        total : total || sum(Object.values(categories)),
+        categories
+    };
+}
+
+function dumpFix(fixAvailable) {
+    if (!fixAvailable) return null;
+
+    return fixAvailable.version;
+}
+
+function parseAuditReportV2(report) {
+    const advisories = [];
+
+    Object.values(report.vulnerabilities).forEach((item) => {
+        const isAdv = !!item.via[0]?.source;
+
+        if (isAdv) {
+            const advisory = item.via[0];
+
+            const adv = {
+                'id'       : advisory.source,
+                'title'    : advisory.title,
+                'url'      : advisory.url,
+                'severity' : advisory.severity,
+                'range'    : advisory.range,
+
+                'vulnerableLibrary' : advisory.name,
+                'fix'               : dumpFix(item.fixAvailable),
+                'rootLibraries'     : []
+            };
+
+            if (item.isDirect) {
+                adv.rootLibraries.push({
+                    name  : item.name,
+                    range : item.range,
+                    fix   : dumpFix(item.fixAvailable)
+                });
+            }
+
+            item.effects.forEach(lib => {
+                const effect = report.vulnerabilities[lib];
+
+                adv.rootLibraries.push({
+                    name  : effect.name,
+                    range : effect.range,
+                    fix   : dumpFix(effect.fixAvailable)
+                });
+            });
+
+            advisories.push(adv);
+        }
+    });
+
+    const { vulnerabilities, dependencies } = report.metadata;
+
+    return {
+        advisories,
+        meta : {
+            vulnerabilities : summarize(vulnerabilities),
+            dependencies    : summarize(dependencies)
+        }
+    };
+}
+
+function parseLegacyReport(report) {
+    const advisories = [];
+
+    Object.values(report.advisories).forEach(item => {
+        const rootLibraries = new Set();
+
+        item.findings.forEach(f => {
+            for (const path of f.paths) {
+                rootLibraries.add(path.split('>')[0]);
+            }
+        });
+
+        advisories.push({
+            'id'       : item.id,
+            'title'    : item.title,
+            'url'      : item.url,
+            'severity' : item.severity,
+            'range'    : item.vulnerable_versions,
+
+            'vulnerableLibrary' : item.module_name,
+            'fix'               : item.patched_versions,
+            'rootLibraries'     : [ ...rootLibraries ].map(
+                name => ({ name })
+            )
+        });
+    });
+
+    return {
+        advisories,
+        meta : {
+            vulnerabilities : summarize(report.metadata.vulnerabilities),
+            dependencies    : {
+                'total'      : report.metadata.totalDependencies,
+                'categories' : {
+                    'prod'     : report.metadata.dependencies,
+                    'dev'      : report.metadata.devDependencies,
+                    'optional' : report.metadata.optionalDependencies
+                }
+            }
+        }
+    };
 }

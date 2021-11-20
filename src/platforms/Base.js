@@ -37,7 +37,7 @@ export class BaseRepo {
             pn.progress(0.5, `Repository ${repoName} onboarded`, res.describe);
 
             if (res instanceof repoRes.VALID_CONFIG) {
-                const { rules, ...config } = res.payload;
+                const { rules, ...config } = res.config;
                 const results = [];
 
                 let ruleIndex = 0;
@@ -46,6 +46,7 @@ export class BaseRepo {
                     const innerPn = new ProgressNotifier([ 0.5, 0.95 ], pn);
                     const r = await this.runAdvisory({ ...rule, ...config });
 
+                    await this.refreshDashboard(rule, r);
                     const progress = innerPn.calcArray(rules.length, ruleIndex++, 1);
 
                     innerPn.progress(progress, `${rule.advisory} rule [${rule.branch}] completed`, r.describe);
@@ -182,7 +183,7 @@ export class BaseRepo {
 
     async handleFixFound(advisory, config, res, { targetPr, targetBranch }) {
         const Advisory = advisory.constructor;
-        const { stats } = advisory.analizeReport(res.payload);
+        const { stats } = advisory.analizeReport(res.report);
         const body = await templates.text(advisory.getPrTemplate(res), { stats });
         const message = advisory.getCommitMessage(res);
 
@@ -193,7 +194,7 @@ export class BaseRepo {
                 files : Advisory.Files
             });
 
-            if (refreshed) return new platfRes.FIX_PR_OPEN(refreshed);
+            if (refreshed) return new platfRes.FIX_PR_OPEN(refreshed, res);
 
             if (config.automerge) {
                 const checks = await this.api.getChecks(this.repo, targetPr);
@@ -201,11 +202,11 @@ export class BaseRepo {
                 if (checks.every(c => c.isSucceeded)) {
                     const m = await this.api.automergePR(this.repo, targetPr);
 
-                    return new platfRes.FIX_PR_MERGED(m);
+                    return new platfRes.FIX_PR_MERGED(m, res);
                 }
             }
 
-            return new platfRes.FIX_PR_OPEN(targetPr);
+            return new platfRes.FIX_PR_OPEN(targetPr, res);
         }
 
         await this.git.uploadFiles(targetBranch, Advisory.Files, message);
@@ -219,8 +220,13 @@ export class BaseRepo {
                 labels : config.labels
             });
 
-            return new platfRes.FIX_PR_OPEN(pr);
+            return new platfRes.FIX_PR_OPEN(pr, res);
         }
+    }
+
+    async refreshDashboard(config, result) {
+        console.log('config:', config);
+        console.log('result:', result.constructor.name, result._payload);
     }
 
     async runAdvisory(config) {
