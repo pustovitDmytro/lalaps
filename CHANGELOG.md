@@ -1,3 +1,15 @@
+# [1.8.0](https://github.com/pustovitDmytro/lalaps/compare/v1.7.1...v1.8.0) (2021-11-20)
+
+
+### Fix
+
+* fixes typo ([94e3ccf](https://github.com/pustovitDmytro/lalaps/commit/94e3ccfa11fbfc7845390cc8ed96b9d959c37f59))
+
+### New
+
+* adds Dashboard. #15 ([48c1e52](https://github.com/pustovitDmytro/lalaps/commit/48c1e528d2411251a9b507a055a6608043d19546)), closes [#15](https://github.com/pustovitDmytro/lalaps/issues/15)
+* adds parse npm audit report ([775d5f1](https://github.com/pustovitDmytro/lalaps/commit/775d5f16ed584337aeaefbe4256a666d0be5f462))
+
 ## [1.7.1](https://github.com/pustovitDmytro/lalaps/compare/v1.7.0...v1.7.1) (2021-11-16)
 
 
