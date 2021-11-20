@@ -42,9 +42,9 @@ export default class Git {
         if (raw) {
             const { valid, error } = await validateConfig(raw);
 
-            if (error) return new res.INVALID_CONFIG(error);
+            if (error) return new res.INVALID_CONFIG({ error });
 
-            return new res.VALID_CONFIG(valid);
+            return new res.VALID_CONFIG({ config: valid });
         }
 
         return new res.CONFIG_NOT_FOUND();

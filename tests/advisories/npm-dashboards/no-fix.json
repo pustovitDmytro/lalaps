@@ -1,0 +1,15 @@
+{
+    "id": "npm_1004869",
+    "title": "Prototype Pollution in node-jsonpointer",
+    "url": "https://github.com/advisories/GHSA-282f-qqgm-c34q",
+    "severity": "moderate",
+    "range": "<5.0.0",
+    "vulnerableLibrary": "jsonpointer",
+    "rootLibraries": [
+        {
+            "name": "danger",
+            "prs": []
+        }
+    ],
+    "prs": []
+}

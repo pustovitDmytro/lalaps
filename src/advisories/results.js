@@ -2,7 +2,7 @@ import BaseResult from '../BaseResult';
 
 class AdvisoryResult extends BaseResult {
     get report() {
-        return this._payload[0];
+        return this._payload.report;
     }
 }
 

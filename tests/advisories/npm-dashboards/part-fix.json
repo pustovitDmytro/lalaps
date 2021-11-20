@@ -1,0 +1,23 @@
+{
+    "id": "npm_1006724",
+    "title": "json-schema is vulnerable to Prototype Pollution",
+    "url": "https://github.com/advisories/GHSA-896r-f27r-55mw",
+    "severity": "moderate",
+    "range": "<0.4.0",
+    "vulnerableLibrary": "json-schema",
+    "rootLibraries": [
+        {
+            "name": "coveralls",
+            "prs": [ 13 ]
+        },
+        {
+            "name": "semantic-release-heroku",
+            "prs": []
+        },
+        {
+            "name": "semantic-release",
+            "prs": [13, 1]
+        }
+    ],
+    "prs": []
+}

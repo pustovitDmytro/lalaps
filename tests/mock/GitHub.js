@@ -41,6 +41,16 @@ function pullResponse(repo, index, data = {}) {
     };
 }
 
+function issueResponse(repo, index, data = {}) {
+    return {
+        id     : 754,
+        number : index,
+        title  : data.title || 'Lalaps Dashboard',
+        body   : data.title || 'Prev text',
+        user   : { login: repo.owner, id: index }
+    };
+}
+
 const GithubReposAPI = load('api/GithubReposAPI.js').default;
 const GithubAppAPI = load('api/GithubAppAPI.js').default;
 const { GithubRepo } = load('platforms/GitHub.js');
@@ -121,6 +131,14 @@ class MockGithubReposAPI extends GithubReposAPI {
 
                 if (opts.method === 'POST' && opts.url.endsWith(`/repos/${repo.owner}/${repo.repository}/pulls`)) {
                     return axiosResponse(pullResponse(repo, repoIndex, opts.data));
+                }
+
+                if (opts.method === 'GET' && opts.url.endsWith(`/repos/${repo.owner}/${repo.repository}/issues`)) {
+                    return axiosResponse([ issueResponse(repo, repoIndex) ]);
+                }
+
+                if (opts.method === 'PATCH' && opts.url.includes(`/repos/${repo.owner}/${repo.repository}/issues`)) {
+                    return axiosResponse(issueResponse(repo, repoIndex, opts.data));
                 }
             }
         }

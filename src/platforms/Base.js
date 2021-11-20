@@ -1,4 +1,5 @@
 /* eslint-disable no-magic-numbers */
+import dayjs from 'dayjs';
 import Git from '../repository/Git';
 import * as repoRes from '../repository/results';
 import * as advRes from '../advisories/results';
@@ -10,10 +11,22 @@ import * as platfRes from './results';
 
 const CONFIGURATION_BRANCH = 'lalaps/configure';
 const CONFIG_FILE_NAME = '.lalapsrc.json';
+const VERBOSITY = 2;
+const DASHBOARD_TITLE = 'Lalaps Dashboard';
 
 export class BaseRepo {
     constructor(repo) {
         this.repo = repo;
+        this.dashboard = {
+            advisories : {},
+            syncDate   : dayjs()
+        };
+    }
+
+    async getDashboard() {
+        const issues = await this.api.getMineIssues(this.repo);
+
+        return issues.find(issue => issue.title === DASHBOARD_TITLE);
     }
 
     async analyze() {
@@ -46,13 +59,15 @@ export class BaseRepo {
                     const innerPn = new ProgressNotifier([ 0.5, 0.95 ], pn);
                     const r = await this.runAdvisory({ ...rule, ...config });
 
-                    await this.refreshDashboard(rule, r);
+                    this.syncDashboard(rule, r);
                     const progress = innerPn.calcArray(rules.length, ruleIndex++, 1);
 
                     innerPn.progress(progress, `${rule.advisory} rule [${rule.branch}] completed`, r.describe);
 
                     results.push(r);
                 }
+
+                await this.refreshDashboard();
 
                 pn.progress(0.95, `${rules.length} rules analized`);
 
@@ -78,7 +93,7 @@ export class BaseRepo {
     async checkBranch(branchName) {
         const configBranch = await this.api.getBranch(this.repo, branchName);
 
-        if (!configBranch) return new platfRes.BRANCH_NOT_FOUND(branchName);
+        if (!configBranch) return new platfRes.BRANCH_NOT_FOUND({ name: branchName });
 
         return this.checkMineBranch(configBranch)
             ? new platfRes.BRANCH_MINE()
@@ -91,7 +106,7 @@ export class BaseRepo {
                 body : await templates.addText(onboardingPR.body, 'onboarding/config_found.md')
             });
 
-            return new platfRes.ONBOARDING_PR_CLOSED(pr);
+            return new platfRes.ONBOARDING_PR_CLOSED({ pr });
         }
 
         return confRes;
@@ -183,8 +198,15 @@ export class BaseRepo {
 
     async handleFixFound(advisory, config, res, { targetPr, targetBranch }) {
         const Advisory = advisory.constructor;
-        const { stats } = advisory.analizeReport(res.report);
-        const body = await templates.text(advisory.getPrTemplate(res), { stats });
+        const details = await templates.text(
+            Advisory.templates.reportDetails,
+            { report: res.report, level: VERBOSITY }
+        );
+
+        const body = await templates.text(
+            advisory.getPrTemplate(res),
+            { details }
+        );
         const message = advisory.getCommitMessage(res);
 
         if (targetPr?.isOpen) {
@@ -194,7 +216,7 @@ export class BaseRepo {
                 files : Advisory.Files
             });
 
-            if (refreshed) return new platfRes.FIX_PR_OPEN(refreshed, res);
+            if (refreshed) return new platfRes.FIX_PR_OPEN({ pr: refreshed, advisory: res });
 
             if (config.automerge) {
                 const checks = await this.api.getChecks(this.repo, targetPr);
@@ -202,11 +224,11 @@ export class BaseRepo {
                 if (checks.every(c => c.isSucceeded)) {
                     const m = await this.api.automergePR(this.repo, targetPr);
 
-                    return new platfRes.FIX_PR_MERGED(m, res);
+                    return new platfRes.FIX_PR_MERGED({ pr: m, advisory: res });
                 }
             }
 
-            return new platfRes.FIX_PR_OPEN(targetPr, res);
+            return new platfRes.FIX_PR_OPEN({ pr: targetPr, advisory: res });
         }
 
         await this.git.uploadFiles(targetBranch, Advisory.Files, message);
@@ -220,13 +242,59 @@ export class BaseRepo {
                 labels : config.labels
             });
 
-            return new platfRes.FIX_PR_OPEN(pr, res);
+            return new platfRes.FIX_PR_OPEN({ pr, advisory: res });
         }
     }
 
-    async refreshDashboard(config, result) {
-        console.log('config:', config);
-        console.log('result:', result.constructor.name, result._payload);
+    syncDashboard(config, result) {
+        const Advisory = advisories[config.advisory];
+
+        if (!this.dashboard.advisories[config.advisory]) {
+            this.dashboard.advisories[config.advisory] = [];
+        }
+
+        const vulnerabilities = this.dashboard.advisories[config.advisory];
+
+        Advisory.syncDashboard(vulnerabilities, {
+            config,
+            report : result.report,
+            pr     : result.pr
+        });
+    }
+
+    async refreshDashboard() {
+        const data = {};
+
+        for (const [ advisoryName, vulnerabilities ] of Object.entries(this.dashboard.advisories)) {
+            const Advisory = advisories[advisoryName];
+            const details = await Promise.all(
+                vulnerabilities.map(vulnerability =>
+                    templates.text(
+                        Advisory.templates.dashboard,
+                        { vulnerability }
+                    ))
+            );
+
+            data[advisoryName] = details;
+        }
+
+        const text = await templates.text(
+            'dashboard.md',
+            { advisories: data }
+        );
+
+        const dashboardIssue = await this.getDashboard();
+
+        await (
+            !dashboardIssue
+                ? this.api.createIssue(this.repo, {
+                    title : DASHBOARD_TITLE,
+                    body  : text
+                })
+                : this.api.updateIssue(this.repo, dashboardIssue, {
+                    title : DASHBOARD_TITLE,
+                    body  : text
+                }));
     }
 
     async runAdvisory(config) {

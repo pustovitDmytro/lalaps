@@ -18,7 +18,6 @@ const doc = `Usage:
 
 async function analyzeRepository(opts) {
     const repo = await github.getRepo(opts['<repository>']);
-
     const result = await repo.analyze();
 
     console.log('analyzeRepository:', result);

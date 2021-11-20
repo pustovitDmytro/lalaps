@@ -1,7 +1,7 @@
 export default class BaseResult {
     #payload;
 
-    constructor(...payload) {
+    constructor(payload) {
         this.#payload = payload;
     }
 

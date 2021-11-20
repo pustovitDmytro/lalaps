@@ -4,7 +4,7 @@ class RepoResults extends BaseResult {}
 
 export class VALID_CONFIG extends RepoResults {
     get config() {
-        return this._payload[0];
+        return this._payload.config;
     }
 }
 export class INVALID_CONFIG extends RepoResults {}

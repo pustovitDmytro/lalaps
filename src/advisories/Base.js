@@ -25,15 +25,20 @@ export default class Advisory {
     async run() {
         const before = await this.check();
 
-        if (!this.isVulnerable(before)) return new results.NOT_VULNERABLE();
+        if (!this.isVulnerable(before)) {
+            const mockReport = await this.compare(before, before);
+
+            return new results.NOT_VULNERABLE({ report: mockReport.report });
+        }
+
         await this.fix();
         const after = await this.check();
         const { report, isFix, isPartialFix } = await this.compare(before, after);
 
-        if (isFix) return new results.FULL_FIX(report);
-        if (isPartialFix) return new results.PARTIAL_FIX(report);
+        if (isFix) return new results.FULL_FIX({ report });
+        if (isPartialFix) return new results.PARTIAL_FIX({ report });
 
-        return new results.NO_FIX(report);
+        return new results.NO_FIX({ report });
     }
 
     getTragetBranch(res) {

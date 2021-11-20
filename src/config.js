@@ -14,8 +14,9 @@ const config = {
             timeToRefresh : ms(e.GITHUB_APP_TOKEN_REFRESH),
             appID         : +e.GITHUB_APP_ID
         },
-        userId  : +e.GITHUB_USER_ID,
-        analyze : true
+        userId   : +e.GITHUB_USER_ID,
+        userName : e.GITHUB_USER_NAME,
+        analyze  : true
     },
     gitea : {
         url     : new URL(e.GITEA_URL),

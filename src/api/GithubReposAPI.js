@@ -18,10 +18,11 @@ class GITHUB_ERROR extends API_ERROR {
 }
 
 export default class GithubReposAPI extends BaseAPI {
-    constructor(token, userId) {
+    constructor(token, { userId, userName }) {
         super('https://api.github.com/');
         this.token = token;
         this.userId = userId;
+        this.userName = userName;
     }
 
     onError(error) {
@@ -165,6 +166,35 @@ export default class GithubReposAPI extends BaseAPI {
 
         return dumpBranch(res);
     }
+
+    async getMineIssues(repo) {
+        const res = await this.get(`/repos/${repo.name}/issues`, {
+            creator : this.userName
+        });
+
+        return res.map(issue => dumpIssue(issue));
+    }
+
+    async createIssue(repo, { title, body }) {
+        const res = await this.post(`/repos/${repo.name}/issues`, {
+            title,
+            body
+        });
+
+        return dumpIssue(res);
+    }
+
+    async updateIssue(repo, issue, { title, body }) {
+        const res = await this.patch(
+            `/repos/${repo.name}/issues/${issue.number}`,
+            {
+                title,
+                body
+            }
+        );
+
+        return dumpIssue(res);
+    }
 }
 
 function dumpUser(u) {
@@ -219,11 +249,6 @@ function dumpPR(p) {
         isClosed,
         isAutoClosed : isClosed && p.title.includes('- autoclosed')
     };
-
-    // merged: false,
-    // mergeable: true,
-    // rebaseable: true,
-    // mergeable_state: 'clean',
 }
 
 function dumpBranch(b) {
@@ -239,6 +264,17 @@ function dumpCheck(c) {
         id          : c.id,
         name        : c.name,
         isSucceeded : c.status === 'completed' && c.conclusion === 'success'
+    };
+}
+
+function dumpIssue(i) {
+    return {
+        id     : i.id,
+        number : i.number,
+        title  : i.title,
+
+        user : dumpUser(i.user),
+        body : i.body
     };
 }
 

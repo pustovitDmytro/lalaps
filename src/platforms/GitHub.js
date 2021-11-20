@@ -27,6 +27,7 @@ export class GithubPlatform extends BasePlatform {
         super(conf);
         this.appAPI = new GithubAppAPI(conf.app);
         this.userId = conf.userId;
+        this.userName = conf.userName;
     }
 
     static Repo = GithubRepo
@@ -38,7 +39,10 @@ export class GithubPlatform extends BasePlatform {
         const [ installation ] = await this.appAPI.listInstallations();
         const { token } = await this.appAPI.createAcessToken(installation.id);
 
-        this.api = new GithubReposAPI(token, this.userId);
+        this.api = new GithubReposAPI(token, {
+            userId   : this.userId,
+            userName : this.userName
+        });
     }
 
     isRepoAnalizable(repo) {

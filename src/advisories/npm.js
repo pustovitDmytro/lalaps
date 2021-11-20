@@ -16,15 +16,8 @@ export default class NPM extends Advisory {
         });
 
         const out = JSON.parse(stdout);
-        const { vulnerabilities } = out.metadata;
 
-        if (vulnerabilities.total !== 0 && !vulnerabilities.total) {
-            vulnerabilities.total = sum(Object.values(vulnerabilities));
-        }
-
-        // { info: 0, low: 0, moderate: 3, high: 11, critical: 0, total: 14 }
-
-        return vulnerabilities;
+        return NPM.parseReport(out);
     }
 
     async fix() {
@@ -37,25 +30,75 @@ export default class NPM extends Advisory {
     }
 
     isVulnerable(report) {
-        return !!report.total;
+        return !!report.meta.vulnerabilities.total;
     }
 
     async compare(before, after) {
-        const totalFixedCount = before.total - after.total;
-        const isFix = !this.isVulnerable(after);
+        const advisories = before.advisories.map(adv => {
+            const corresponds = after.advisories.find(a => a.id === adv.id);
+            const isFixed = !corresponds;
 
-        const isPartialFix = totalFixedCount > 0;
-        const report = [ {
-            type   : 'total',
-            before : before.total,
-            after  : after.total
-        } ];
+            return {
+                ...adv,
+                isFixed,
+                rootLibraries : adv.rootLibraries.map(lib => ({
+                    ...lib,
+                    isFixed : !corresponds?.rootLibraries.some(l => l.name === lib.name)
+                }))
+            };
+        });
+
+        const report = {
+            advisories,
+            meta : {
+                vulnerabilities : summaryStats(before.meta.vulnerabilities, after.meta.vulnerabilities),
+                dependencies    : summaryStats(before.meta.dependencies, after.meta.dependencies)
+            }
+        };
+
+        const isFix = !this.isVulnerable(after);
+        const isPartialFix = report.meta.vulnerabilities.total.change > 0;
 
         return {
             isFix,
             isPartialFix,
             report
         };
+    }
+
+    static syncDashboard(vulnerabilities, { report, pr }) {
+        for (const advisory of report.advisories) {
+            const isFixed = pr && advisory.isFixed;
+
+            let found = vulnerabilities.find(a => a.id === advisory.id);
+
+            if (!found) {
+                found = {
+                    id                : advisory.id,
+                    title             : advisory.title,
+                    url               : advisory.url,
+                    severity          : advisory.severity,
+                    range             : advisory.range,
+                    vulnerableLibrary : advisory.vulnerableLibrary,
+                    rootLibraries     : advisory.rootLibraries.map(({ name }) => ({ name, prs: [] })),
+                    prs               : []
+                };
+                vulnerabilities.push(found);
+            }
+
+            if (isFixed) found.prs.push(pr.number);
+            found.rootLibraries = found.rootLibraries.map(lib => {
+                const libFixed = pr && advisory.rootLibraries.find(l => l.name === lib.name)?.isFixed;
+                const prs = lib.prs;
+
+                if (libFixed) prs.push(pr.number);
+
+                return {
+                    ...lib,
+                    prs
+                };
+            });
+        }
     }
 
     static Files = [ 'package.json', 'package-lock.json' ]
@@ -66,20 +109,10 @@ export default class NPM extends Advisory {
         defaultConfig : 'onboarding/npm_default_config.json',
 
         alreadyFixed : 'already_fixed.md',
-        noFix        : 'no_fix.md'
-    }
+        noFix        : 'no_fix.md',
 
-    analizeReport(reports) {
-        const [ total ] = reports;
-        const stats = {
-            fixed  : total.before - total.after,
-            before : total.before,
-            after  : total.after
-        };
-
-        stats.rate = stats.fixed / stats.before;
-
-        return { stats };
+        reportDetails : 'npm/report_details.md',
+        dashboard     : 'npm/dashboard.md'
     }
 
     get describe() {
@@ -125,13 +158,46 @@ async function executeAuditCommand({
 
         return res.stdout;
     } catch (error) {
+        if (error.exitCode === 1 && error.stderr === 'npm WARN invalid config audit-level="none"') {
+            return error.stdout;
+        }
+
         logger.error({ code: 'NPM_AUDIT_ERROR', error });
+
         throw error;
     }
 }
 
 function sum(array) {
     return array.reduce((prev, curr) => prev + curr, 0);
+}
+
+function summaryStats(before, after) {
+    const categories = {};
+
+    Object.keys(before.categories).forEach(category => {
+        categories[category] = calcStats(
+            before.categories[category],
+            after.categories[category]
+        );
+    });
+
+    return {
+        total : calcStats(before.total, after.total),
+        categories
+    };
+}
+
+function calcStats(before, after) {
+    const stats = {
+        change : before - after,
+        before,
+        after
+    };
+
+    if (before) stats.rate = stats.change / stats.before;
+
+    return stats;
 }
 
 function summarize(obj) {
@@ -159,7 +225,7 @@ function parseAuditReportV2(report) {
             const advisory = item.via[0];
 
             const adv = {
-                'id'       : advisory.source,
+                'id'       : `npm_${advisory.source}`,
                 'title'    : advisory.title,
                 'url'      : advisory.url,
                 'severity' : advisory.severity,
@@ -216,7 +282,7 @@ function parseLegacyReport(report) {
         });
 
         advisories.push({
-            'id'       : item.id,
+            'id'       : `npm_${item.id}`,
             'title'    : item.title,
             'url'      : item.url,
             'severity' : item.severity,

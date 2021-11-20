@@ -30,10 +30,10 @@ test('VALID_CONFIG + FULL_FIX #npm', async function () {
     const [ prod, dev ] = results;
 
     assert.equal(prod.constructor.name, 'FIX_PR_OPEN');
-    assert.include(prod.payload.body, 'This PR fixes 2 of 2 npm vulnerabilities');
+    assert.include(prod.pr.body, 'Fixed 2 of 2 npm vulnerabilities');
 
     assert.equal(dev.constructor.name, 'FIX_PR_OPEN');
-    assert.include(dev.payload.body, 'This PR fixes 1 of 3 npm vulnerabilities');
+    assert.include(dev.pr.body, 'Fixed 1 of 3 npm vulnerabilities');
 });
 
 test('PARTIAL_FIX + openPr #npm', async function () {

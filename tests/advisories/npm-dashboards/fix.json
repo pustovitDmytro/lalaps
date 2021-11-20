@@ -1,0 +1,15 @@
+{
+    "id": "npm_1004946",
+    "title": " Inefficient Regular Expression Complexity in chalk/ansi-regex",
+    "url": "https://github.com/advisories/GHSA-93q8-gq69-wqmw",
+    "severity": "moderate",
+    "range": ">2.1.1 <5.0.1",
+    "vulnerableLibrary": "ansi-regex",
+    "rootLibraries": [
+        {
+            "name": "semantic-release",
+            "prs": [ 2 ]
+        }
+    ],
+    "prs": [ 2 ]
+}
