@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/pustovitDmytro/lalaps/compare/v1.8.0...v1.9.0) (2021-11-21)
+
+
+### New
+
+* integrate cottus ([ab62956](https://github.com/pustovitDmytro/lalaps/commit/ab62956cc3898630229a61dd8123728fe14c6cf4))
+
 # [1.8.0](https://github.com/pustovitDmytro/lalaps/compare/v1.7.1...v1.8.0) (2021-11-20)
 
 
