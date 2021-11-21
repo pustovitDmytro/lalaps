@@ -1,5 +1,4 @@
 import Bull from 'bull';
-import ms from 'ms';
 import packageConfig from '../package';
 import logger, { logDecorator }  from './logger';
 import { getJobRunner } from './workers/utils';
@@ -121,8 +120,10 @@ export default class Queue {
 
             res[state] = jobs.length;
         }));
+        const minute = 60_000;
+
         await Promise.all(states.map(async state => {
-            await this.queue.clean(ms('1m'), state);
+            await this.queue.clean(minute, state);
             res.cleaned.push(state);
         }));
 

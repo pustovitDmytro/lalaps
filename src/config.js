@@ -1,74 +1,96 @@
 import dotenv from 'dotenv';
-import ms from 'ms';
+import cottus, { Assembler } from 'cottus';
 
 dotenv.config({ path: '.env' });
 dotenv.config({ path: '.env.defaults' });
 
 const e = process.env;
 
-const config = {
+const schema = {
     github : {
         app : {
-            privateKey    : e.GITHUB_APP_PRIVATE_KEY,
-            tokenExpire   : ms(e.GITHUB_APP_TOKEN_EXPIRE),
-            timeToRefresh : ms(e.GITHUB_APP_TOKEN_REFRESH),
-            appID         : +e.GITHUB_APP_ID
+            privateKey    : { $source: '{GITHUB_APP_PRIVATE_KEY}', $validate: [ 'required', 'encryption_key' ] },
+            tokenExpire   : { $source: '{GITHUB_APP_TOKEN_EXPIRE}', $validate: [ 'required', 'time_unit' ] },
+            timeToRefresh : { $source: '{GITHUB_APP_TOKEN_REFRESH}', $validate: [ 'required', 'time_unit' ] },
+            appID         : { $source: '{GITHUB_APP_ID}', $validate: [ 'required', 'integer' ] }
         },
-        userId   : +e.GITHUB_USER_ID,
-        userName : e.GITHUB_USER_NAME,
-        analyze  : true
+        userId   : { $source: '{GITHUB_USER_ID}', $validate: [ 'required', 'integer' ] },
+        userName : { $source: '{GITHUB_USER_NAME}', $validate: [ 'required', 'string' ] },
+        analyze  : { $source: '{GITHUB_ANALIZE}', $validate: [ 'required', 'boolean' ] }
     },
-    gitea : {
-        url     : new URL(e.GITEA_URL),
-        token   : e.GITEA_TOKEN,
-        analyze : false
-    },
+
+    gitea : e.GITEA_URL ? {
+        url     : { $source: '{GITEA_URL}', $validate: [ 'required', 'url' ] },
+        token   : { $source: '{GITEA_TOKEN}', $validate: [ 'required', 'string' ] },
+        analyze : { $source: '{GITEA_ANALIZE}', $validate: [ 'required', 'boolean' ] }
+    } : null,
+
     git : {
-        tmpFolder : e.TMP_FOLDER,
-        name      : e.GIT_USER,
-        email     : e.GIT_EMAIL
+        tmpFolder : { $source: '{TMP_FOLDER}', $validate: [ 'required', 'path' ] },
+        name      : { $source: '{GIT_USER}', $validate: [ 'required', 'string' ] },
+        email     : { $source: '{GIT_EMAIL}', $validate: [ 'required', 'email' ] }
     },
     queue : {
         redis : {
-            port     : +e.REDIS_PORT,
-            host     : e.REDIS_HOST,
-            db       : +e.REDIS_DB,
-            password : e.REDIS_PASSWORD,
-            username : e.REDIS_USER
+            port     : { $source: '{REDIS_PORT}', $validate: [ 'required', 'port' ] },
+            host     : { $source: '{REDIS_HOST}', $validate: [ 'required', 'hostname' ] },
+            db       : { $source: '{REDIS_DB}', $validate: [ 'integer' ] },
+            password : { $source: '{REDIS_PASSWORD}', $validate: [ 'string' ] },
+            username : { $source: '{REDIS_USER}', $validate: [ 'string' ] }
         },
         main : {
-            name     : e.MAIN_QUEUE_NAME,
-            ttl      : ms(e.MAIN_QUEUE_TTL),
-            attempts : +e.MAIN_QUEUE_ATTEMPTS,
-            backoff  : {
-                type  : e.MAIN_QUEUE_BACKOFF_TYPE,
-                delay : ms(e.MAIN_QUEUE_BACKOFF_DELAY)
+            name        : { $source: '{MAIN_QUEUE_NAME}', $validate: [ 'required', 'string' ] },
+            ttl         : { $source: '{MAIN_QUEUE_TTL}', $validate: [ 'required', 'time_unit' ] },
+            attempts    : { $source: '{MAIN_QUEUE_ATTEMPTS}', $validate: [ 'required', 'integer', { 'min': 1 } ] },
+            concurrency : { $source: '{MAIN_QUEUE_CONCURRENCY}', $validate: [ 'required', 'integer', { 'min': 1 } ] },
+            logLevel    : {
+                $source   : '{MAIN_QUEUE_LOG_LEVEL}',
+                $validate : [ 'required', { 'enum': [ 'error', 'warn', 'info', 'notice', 'verbose', 'debug' ] } ]
             },
-            concurrency : +e.MAIN_QUEUE_CONCURRENCY,
-            logLevel    : e.MAIN_QUEUE_LOG_LEVEL,
-            repeat      : e.MAIN_QUEUE_REPEAT,
-            canProcess  : e.MAIN_QUEUE_PROCESS === 'true'
+            repeat     : { $source: '{MAIN_QUEUE_REPEAT}', $validate: [ 'cron' ] },
+            canProcess : { $source: '{MAIN_QUEUE_PROCESS}', $validate: [ 'required', 'boolean' ] },
+            backoff    : e.REPO_QUEUE_BACKOFF_TYPE ? {
+                type  : { $source: '{MAIN_QUEUE_BACKOFF_TYPE}', $validate: [ 'string' ] },
+                delay : { $source: '{MAIN_QUEUE_BACKOFF_DELAY}', $validate: [ 'string' ] }
+            } : null
         },
         repo : {
-            name     : e.REPO_QUEUE_NAME,
-            ttl      : ms(e.REPO_QUEUE_TTL),
-            attempts : +e.REPO_QUEUE_ATTEMPTS,
-            backoff  : {
-                type  : e.REPO_QUEUE_BACKOFF_TYPE,
-                delay : ms(e.REPO_QUEUE_BACKOFF_DELAY)
+            name        : { $source: '{REPO_QUEUE_NAME}', $validate: [ 'required', 'string' ] },
+            ttl         : { $source: '{REPO_QUEUE_TTL}', $validate: [ 'required', 'time_unit' ] },
+            attempts    : { $source: '{REPO_QUEUE_ATTEMPTS}', $validate: [ 'required', 'integer', { 'min': 1 } ] },
+            concurrency : { $source: '{REPO_QUEUE_CONCURRENCY}', $validate: [ 'required', 'integer', { 'min': 1 } ] },
+            logLevel    : {
+                $source   : '{REPO_QUEUE_LOG_LEVEL}',
+                $validate : [ 'required', { 'enum': [ 'error', 'warn', 'info', 'notice', 'verbose', 'debug' ] } ]
             },
-            concurrency : +e.REPO_QUEUE_CONCURRENCY,
-            logLevel    : e.REPO_QUEUE_LOG_LEVEL,
-            canProcess  : e.REPO_QUEUE_PROCESS === 'true'
+            // repeat     : { $source: '{REPO_QUEUE_REPEAT}', $validate: [ 'cron' ] },
+            canProcess : { $source: '{REPO_QUEUE_PROCESS}', $validate: [ 'required', 'boolean' ] },
+            backoff    : e.REPO_QUEUE_BACKOFF_TYPE ? {
+                type  : { $source: '{REPO_QUEUE_BACKOFF_TYPE}', $validate: [ 'string' ] },
+                delay : { $source: '{REPO_QUEUE_BACKOFF_DELAY}', $validate: [ 'string' ] }
+            } : null
         }
     },
     web : {
-        port  : +e.PORT,
-        start : e.WEB_START === 'true',
+        port  : { $source: '{PORT}', $validate: [ 'required', 'port' ] },
+        start : { $source: '{WEB_START}', $validate: [ 'required', 'boolean' ] },
         admin : {
-            password : e.BASIC_ADMIN_PASSWORD
+            password : { $source: '{BASIC_ADMIN_PASSWORD}', $validate: [ 'required', 'string' ] }
+        }
+    },
+    verification : {
+        $source   : { type: 'complex_array', prefix: 'VERIFICATION_' },
+        $validate : {
+            'fileName' : { $source: '{_FILE_NAME}', $validate: [ 'required', 'path' ] },
+            'content'  : { $source: '{_CONTENT}', $validate: [ 'required', 'string' ] }
         }
     }
 };
+
+const assembler = new Assembler(cottus, schema);
+
+assembler.parse();
+
+const config = assembler.run(e);
 
 export default config;
