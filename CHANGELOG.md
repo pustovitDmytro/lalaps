@@ -1,3 +1,10 @@
+## [1.9.2](https://github.com/pustovitDmytro/lalaps/compare/v1.9.1...v1.9.2) (2021-11-21)
+
+
+### Fix
+
+* return attachment ([5f0cc1c](https://github.com/pustovitDmytro/lalaps/commit/5f0cc1c38e7dfbd72b16bdb65839b539f4bc84d1))
+
 ## [1.9.1](https://github.com/pustovitDmytro/lalaps/compare/v1.9.0...v1.9.1) (2021-11-21)
 
 
