@@ -75,7 +75,6 @@ app.use('/admin/info', checkBasicAuth, renderInfo);
 
 function renderFile(file) {
     app.use(`/${file.fileName}`, (req, res) => {
-        res.attachment(file.fileName);
         res.type('txt');
         res.send(file.content);
     });
