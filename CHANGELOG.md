@@ -1,3 +1,11 @@
+## [1.9.1](https://github.com/pustovitDmytro/lalaps/compare/v1.9.0...v1.9.1) (2021-11-21)
+
+
+### Fix
+
+* dont send verification as attachment ([aa291af](https://github.com/pustovitDmytro/lalaps/commit/aa291af45041e81185752b3ff02bfa5e7eb5403b))
+* fixes rootlib calculation in npmv2 reports ([580e277](https://github.com/pustovitDmytro/lalaps/commit/580e2772c6b1a077fd1fcbb4f375ac427839f70c))
+
 # [1.9.0](https://github.com/pustovitDmytro/lalaps/compare/v1.8.0...v1.9.0) (2021-11-21)
 
 
