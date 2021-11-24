@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/pustovitDmytro/lalaps/compare/v1.9.2...v1.10.0) (2021-11-24)
+
+
+### New
+
+* allow to skip gitea ([9561a2d](https://github.com/pustovitDmytro/lalaps/commit/9561a2d86176a37b979ddec8994ec5ff608ad281))
+
 ## [1.9.2](https://github.com/pustovitDmytro/lalaps/compare/v1.9.1...v1.9.2) (2021-11-21)
 
 
