@@ -334,8 +334,12 @@ export class BaseRepo {
     }
 }
 
+export class EmptyPlatform {}
+
 export class BasePlatform {
     constructor(config) {
+        // eslint-disable-next-line no-constructor-return
+        if (!config) return new EmptyPlatform();
         this.shouldAnalize = config.analyze;
     }
 

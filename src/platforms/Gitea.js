@@ -24,7 +24,7 @@ export class GiteaRepo extends BaseRepo {
 export class GiteaPlatform extends BasePlatform {
     constructor(conf) {
         super(conf);
-
+        if (!conf) return;
         this.api = new API(conf.url, conf.token);
     }
 
