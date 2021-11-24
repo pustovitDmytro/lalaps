@@ -111,8 +111,15 @@ export default class Queue {
         }
     }
 
-    async clean() {
-        const states = [ 'active', 'paused', 'failed', 'completed' ];
+    async clean(force) {
+        if (force) {
+            await this.queue.obliterate({ force });
+
+            return { 'obliterated': true };
+        }
+
+        const states = [ 'active', 'paused' ];
+
         const res = { cleaned: [] };
 
         await Promise.all(states.map(async state => {
@@ -130,8 +137,8 @@ export default class Queue {
         return res;
     }
 
-    static async clean() {
-        await Promise.all(QUEUES.map(queue => queue.clean()));
+    static async clean(force) {
+        await Promise.all(QUEUES.map(queue => queue.clean(force)));
     }
 }
 

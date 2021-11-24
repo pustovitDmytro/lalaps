@@ -45,7 +45,7 @@ export default class Test {
     }
 
     async dropQueue() {
-        await Queue.clean();
+        await Queue.clean(true);
     }
 }
 

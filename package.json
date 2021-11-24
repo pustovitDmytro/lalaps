@@ -4,7 +4,8 @@
   "description": "autofix security issues",
   "main": "./lib",
   "scripts": {
-    "prepare": "babel src --out-dir ./lib --copy-files && husky install",
+    "prepare": "npm run build:src && husky install",
+    "build:src": "babel src --out-dir ./lib --copy-files",
     "coveralls": "cat ./reports/coverage/lcov.info | coveralls",
     "test:security": "npm audit --production && npm run test:lock",
     "test:lint": "eslint src bin tests --no-error-on-unmatched-pattern",
@@ -16,7 +17,8 @@
     "coverage-check": "MODE=test nyc check-coverage",
     "test": "npm run test:lint && npm run test:security && BUILD=1 npm run test:mocha",
     "sort-deps": "npm remove --save example; npm remove --save-dev example",
-    "semantic-release": "npx semantic-release"
+    "semantic-release": "npx semantic-release",
+    "start:local": "docker-compose -f local.docker-compose.yml up"
   },
   "repository": {
     "type": "git",
