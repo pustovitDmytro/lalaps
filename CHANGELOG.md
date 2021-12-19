@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/pustovitDmytro/lalaps/compare/v1.10.1...v1.11.0) (2021-12-19)
+
+
+### New
+
+* adds sync date to dashboard ([bf9998b](https://github.com/pustovitDmytro/lalaps/commit/bf9998bf12a729113f1ebf5153d5203b67d8a328))
+
 ## [1.10.1](https://github.com/pustovitDmytro/lalaps/compare/v1.10.0...v1.10.1) (2021-12-19)
 
 
