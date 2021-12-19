@@ -1,0 +1,419 @@
+{
+    "auditReportVersion": 2,
+    "vulnerabilities": {
+      "@npmcli/arborist": {
+        "name": "@npmcli/arborist",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "@npmcli/metavuln-calculator",
+          "@npmcli/run-script"
+        ],
+        "effects": [
+          "libnpmfund"
+        ],
+        "range": "<=2.10.0",
+        "nodes": [
+          "node_modules/npm/node_modules/@npmcli/arborist"
+        ],
+        "fixAvailable": true
+      },
+      "@npmcli/metavuln-calculator": {
+        "name": "@npmcli/metavuln-calculator",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "pacote"
+        ],
+        "effects": [
+          "@npmcli/arborist"
+        ],
+        "range": "<=1.1.1",
+        "nodes": [
+          "node_modules/npm/node_modules/@npmcli/metavuln-calculator"
+        ],
+        "fixAvailable": true
+      },
+      "@npmcli/run-script": {
+        "name": "@npmcli/run-script",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "node-gyp"
+        ],
+        "effects": [
+          "@npmcli/arborist",
+          "libnpmexec",
+          "libnpmpack",
+          "libnpmversion",
+          "npm",
+          "pacote"
+        ],
+        "range": "1.1.1 - 1.8.6",
+        "nodes": [
+          "node_modules/@npmcli/run-script",
+          "node_modules/npm/node_modules/@npmcli/run-script"
+        ],
+        "fixAvailable": false
+      },
+      "ansi-regex": {
+        "name": "ansi-regex",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          {
+            "source": 1004946,
+            "name": "ansi-regex",
+            "dependency": "ansi-regex",
+            "title": " Inefficient Regular Expression Complexity in chalk/ansi-regex",
+            "url": "https://github.com/advisories/GHSA-93q8-gq69-wqmw",
+            "severity": "moderate",
+            "range": ">2.1.1 <5.0.1"
+          }
+        ],
+        "effects": [
+          "strip-ansi"
+        ],
+        "range": ">2.1.1 <5.0.1",
+        "nodes": [
+          "node_modules/npm/node_modules/cli-table3/node_modules/ansi-regex",
+          "node_modules/npm/node_modules/string-width/node_modules/ansi-regex"
+        ],
+        "fixAvailable": true
+      },
+      "coveralls": {
+        "name": "coveralls",
+        "severity": "moderate",
+        "isDirect": true,
+        "via": [
+          "request"
+        ],
+        "effects": [],
+        "range": ">=2.11.5",
+        "nodes": [
+          "node_modules/coveralls"
+        ],
+        "fixAvailable": {
+          "name": "coveralls",
+          "version": "2.11.4",
+          "isSemVerMajor": true
+        }
+      },
+      "danger": {
+        "name": "danger",
+        "severity": "moderate",
+        "isDirect": true,
+        "via": [
+          "jsonpointer"
+        ],
+        "effects": [],
+        "range": ">=0.14.0",
+        "nodes": [
+          "node_modules/danger"
+        ],
+        "fixAvailable": {
+          "name": "danger",
+          "version": "0.13.0",
+          "isSemVerMajor": true
+        }
+      },
+      "http-signature": {
+        "name": "http-signature",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "jsprim"
+        ],
+        "effects": [
+          "request"
+        ],
+        "range": "1.0.0 - 1.3.5",
+        "nodes": [
+          "node_modules/http-signature",
+          "node_modules/npm/node_modules/http-signature"
+        ],
+        "fixAvailable": false
+      },
+      "json-schema": {
+        "name": "json-schema",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          {
+            "source": 1006724,
+            "name": "json-schema",
+            "dependency": "json-schema",
+            "title": "json-schema is vulnerable to Prototype Pollution",
+            "url": "https://github.com/advisories/GHSA-896r-f27r-55mw",
+            "severity": "moderate",
+            "range": "<0.4.0"
+          }
+        ],
+        "effects": [
+          "jsprim"
+        ],
+        "range": "<0.4.0",
+        "nodes": [
+          "node_modules/json-schema",
+          "node_modules/npm/node_modules/json-schema"
+        ],
+        "fixAvailable": false
+      },
+      "jsonpointer": {
+        "name": "jsonpointer",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          {
+            "source": 1004869,
+            "name": "jsonpointer",
+            "dependency": "jsonpointer",
+            "title": "Prototype Pollution in node-jsonpointer",
+            "url": "https://github.com/advisories/GHSA-282f-qqgm-c34q",
+            "severity": "moderate",
+            "range": "<5.0.0"
+          }
+        ],
+        "effects": [
+          "danger"
+        ],
+        "range": "<5.0.0",
+        "nodes": [
+          "node_modules/jsonpointer"
+        ],
+        "fixAvailable": {
+          "name": "danger",
+          "version": "0.13.0",
+          "isSemVerMajor": true
+        }
+      },
+      "jsprim": {
+        "name": "jsprim",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "json-schema"
+        ],
+        "effects": [
+          "http-signature"
+        ],
+        "range": "0.3.0 - 2.0.1",
+        "nodes": [
+          "node_modules/jsprim",
+          "node_modules/npm/node_modules/jsprim"
+        ],
+        "fixAvailable": false
+      },
+      "libnpmdiff": {
+        "name": "libnpmdiff",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "pacote"
+        ],
+        "effects": [
+          "npm"
+        ],
+        "range": "*",
+        "nodes": [
+          "node_modules/npm/node_modules/libnpmdiff"
+        ],
+        "fixAvailable": true
+      },
+      "libnpmexec": {
+        "name": "libnpmexec",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "@npmcli/run-script"
+        ],
+        "effects": [
+          "npm"
+        ],
+        "range": "<=2.0.1",
+        "nodes": [
+          "node_modules/npm/node_modules/libnpmexec"
+        ],
+        "fixAvailable": true
+      },
+      "libnpmfund": {
+        "name": "libnpmfund",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "@npmcli/arborist"
+        ],
+        "effects": [],
+        "range": "<=1.1.0",
+        "nodes": [
+          "node_modules/npm/node_modules/libnpmfund"
+        ],
+        "fixAvailable": true
+      },
+      "libnpmpack": {
+        "name": "libnpmpack",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "@npmcli/run-script",
+          "pacote"
+        ],
+        "effects": [],
+        "range": "<=2.0.1",
+        "nodes": [
+          "node_modules/npm/node_modules/libnpmpack"
+        ],
+        "fixAvailable": true
+      },
+      "libnpmversion": {
+        "name": "libnpmversion",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "@npmcli/run-script"
+        ],
+        "effects": [
+          "semantic-release-heroku"
+        ],
+        "range": "<=2.0.0",
+        "nodes": [
+          "node_modules/libnpmversion",
+          "node_modules/npm/node_modules/libnpmversion"
+        ],
+        "fixAvailable": false
+      },
+      "node-gyp": {
+        "name": "node-gyp",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "request"
+        ],
+        "effects": [
+          "@npmcli/run-script",
+          "npm"
+        ],
+        "range": "0.9.6 || 3.8.0 - 7.1.2",
+        "nodes": [
+          "node_modules/node-gyp",
+          "node_modules/npm/node_modules/node-gyp"
+        ],
+        "fixAvailable": false
+      },
+      "npm": {
+        "name": "npm",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "@npmcli/run-script",
+          "libnpmdiff",
+          "libnpmexec",
+          "node-gyp"
+        ],
+        "effects": [],
+        "range": "1.2.19 - 1.2.25 || >=5.9.0-next.0",
+        "nodes": [
+          "node_modules/npm"
+        ],
+        "fixAvailable": true
+      },
+      "pacote": {
+        "name": "pacote",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "@npmcli/run-script"
+        ],
+        "effects": [
+          "@npmcli/metavuln-calculator",
+          "libnpmdiff",
+          "libnpmpack"
+        ],
+        "range": "11.1.5 - 11.3.5",
+        "nodes": [
+          "node_modules/npm/node_modules/pacote"
+        ],
+        "fixAvailable": true
+      },
+      "request": {
+        "name": "request",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "http-signature"
+        ],
+        "effects": [
+          "coveralls",
+          "node-gyp"
+        ],
+        "range": ">=2.66.0",
+        "nodes": [
+          "node_modules/npm/node_modules/request",
+          "node_modules/request"
+        ],
+        "fixAvailable": false
+      },
+      "semantic-release-heroku": {
+        "name": "semantic-release-heroku",
+        "severity": "moderate",
+        "isDirect": true,
+        "via": [
+          "libnpmversion"
+        ],
+        "effects": [],
+        "range": "*",
+        "nodes": [
+          "node_modules/semantic-release-heroku"
+        ],
+        "fixAvailable": false
+      },
+      "string-width": {
+        "name": "string-width",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "strip-ansi"
+        ],
+        "effects": [],
+        "range": "2.1.0 - 4.1.0",
+        "nodes": [
+          "node_modules/npm/node_modules/string-width"
+        ],
+        "fixAvailable": true
+      },
+      "strip-ansi": {
+        "name": "strip-ansi",
+        "severity": "moderate",
+        "isDirect": false,
+        "via": [
+          "ansi-regex"
+        ],
+        "effects": [
+          "string-width"
+        ],
+        "range": "4.0.0 - 5.2.0",
+        "nodes": [
+          "node_modules/npm/node_modules/string-width/node_modules/strip-ansi"
+        ],
+        "fixAvailable": true
+      }
+    },
+    "metadata": {
+      "vulnerabilities": {
+        "info": 0,
+        "low": 0,
+        "moderate": 22,
+        "high": 0,
+        "critical": 0,
+        "total": 22
+      },
+      "dependencies": {
+        "prod": 219,
+        "dev": 1370,
+        "optional": 6,
+        "peer": 0,
+        "peerOptional": 0,
+        "total": 1588
+      }
+    }
+  }

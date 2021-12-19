@@ -1,5 +1,5 @@
 import execa from 'execa';
-import { flatten } from 'myrmidon';
+import { flatten, isString } from 'myrmidon';
 import logger from '../logger';
 import Advisory from './Base';
 
@@ -213,14 +213,14 @@ function summarize(obj) {
 function dumpFix(fixAvailable) {
     if (!fixAvailable) return null;
 
-    return fixAvailable.version;
+    return fixAvailable.version || fixAvailable;
 }
 
 function parseAuditReportV2(report) {
     const advisories = [];
 
     function searchRoots(libName) {
-        const lib = report.vulnerabilities[libName];
+        const lib = isString(libName) ? report.vulnerabilities[libName] : libName;
 
         if (lib.isDirect) {
             return [ {
@@ -251,22 +251,10 @@ function parseAuditReportV2(report) {
                 'rootLibraries'     : []
             };
 
-
-            if (item.isDirect) {
-                adv.rootLibraries.push({
-                    name  : item.name,
-                    range : item.range,
-                    fix   : dumpFix(item.fixAvailable)
-                });
-            }
-
-
-            item.effects.forEach(lib => {
-                searchRoots(lib).forEach(root => {
-                    if (!adv.rootLibraries.some(l => l.name === root.name)) {
-                        adv.rootLibraries.push(root);
-                    }
-                });
+            searchRoots(item).forEach(root => {
+                if (!adv.rootLibraries.some(l => l.name === root.name)) {
+                    adv.rootLibraries.push(root);
+                }
             });
 
             advisories.push(adv);
