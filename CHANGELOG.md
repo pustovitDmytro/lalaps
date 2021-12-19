@@ -1,3 +1,14 @@
+## [1.10.1](https://github.com/pustovitDmytro/lalaps/compare/v1.10.0...v1.10.1) (2021-12-19)
+
+
+### Chore
+
+* obliterate jobs in test instead clean ([13a787b](https://github.com/pustovitDmytro/lalaps/commit/13a787b3be39c34ce2d0003017a763302ad493ea))
+
+### Fix
+
+* rootlib calculations in auditReportVersion v.2 ([c5b7e0f](https://github.com/pustovitDmytro/lalaps/commit/c5b7e0f1b97a2270c3224a3054e4c4805ab6411f))
+
 # [1.10.0](https://github.com/pustovitDmytro/lalaps/compare/v1.9.2...v1.10.0) (2021-11-24)
 
 
