@@ -9,4 +9,6 @@ This issue provides visibility into Lalaps updates and their statuses.
 <%}-%>
 
 <%}-%>
+
+Last Updated: <%-current_timestamp%>
 <!-- Lalaps.description:end -->

@@ -2,6 +2,7 @@ import path from 'path';
 import fs from 'fs-extra';
 import ejs from 'ejs';
 import { flatten } from 'myrmidon';
+import dayjs from 'dayjs';
 
 const templatesDir = path.join(__dirname, '../templates');
 
@@ -14,6 +15,12 @@ async function getFiles(dir) {
     }));
 
     return flatten(files);
+}
+
+function defaultParams() {
+    return {
+        'current_timestamp' : dayjs().format('DD MMM YYYY, [at] HH:mm [UTC]')
+    };
 }
 
 export class Templates {
@@ -36,7 +43,7 @@ export class Templates {
     text(templateId, data) {
         const template =  this.templates[templateId];
 
-        return template(data);
+        return template({ ...defaultParams(), ...data });
     }
 
     addText(base, templateId) {
