@@ -17,7 +17,7 @@ Success Rate: **<%=(report.meta.vulnerabilities.total.rate*100).toPrecision(3)%>
 <% if(level >=2){ -%>
 
 **Vulnerabilities**:
-    <% for(const advisory of report.advisories) {%>
+<% for(const advisory of report.advisories) {%>
         <!-- Lalaps.advisory.<%=advisory.id%>:start -->
         [<%=advisory.title%>](<%=advisory.url%>)
         Library: `<%=advisory.vulnerableLibrary%>`
