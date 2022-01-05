@@ -1,3 +1,15 @@
+## [1.11.1](https://github.com/pustovitDmytro/lalaps/compare/v1.11.0...v1.11.1) (2022-01-04)
+
+
+### Chore
+
+* (ci) fix gitleaks version ([badd1c1](https://github.com/pustovitDmytro/lalaps/commit/badd1c1f473e4b3b3cac41996ce3b2212281b131))
+* integrate lalaps ([dd4f238](https://github.com/pustovitDmytro/lalaps/commit/dd4f2389b10a309482770bd12e73191ef6b89f6f))
+
+### Fix
+
+* ident npm report details ([98f1e60](https://github.com/pustovitDmytro/lalaps/commit/98f1e60efda553fc814da2839ae490ee61c671d8))
+
 # [1.11.0](https://github.com/pustovitDmytro/lalaps/compare/v1.10.1...v1.11.0) (2021-12-19)
 
 
