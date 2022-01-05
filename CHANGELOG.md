@@ -1,3 +1,10 @@
+## [1.11.2](https://github.com/pustovitDmytro/lalaps/compare/v1.11.1...v1.11.2) (2022-01-05)
+
+
+### Fix
+
+* fixes identation in npm vuln details template ([cda07b3](https://github.com/pustovitDmytro/lalaps/commit/cda07b342c544827b4f42996dbc04fcd8925968a))
+
 ## [1.11.1](https://github.com/pustovitDmytro/lalaps/compare/v1.11.0...v1.11.1) (2022-01-04)
 
 
