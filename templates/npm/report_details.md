@@ -18,20 +18,20 @@ Success Rate: **<%=(report.meta.vulnerabilities.total.rate*100).toPrecision(3)%>
 
 **Vulnerabilities**:
 <% for(const advisory of report.advisories) {%>
-        <!-- Lalaps.advisory.<%=advisory.id%>:start -->
-        [<%=advisory.title%>](<%=advisory.url%>)
-        Library: `<%=advisory.vulnerableLibrary%>`
-        Affected versions: `<%-advisory.range%>`
-        Severity: **<%=advisory.severity%>**
+<!-- Lalaps.advisory.<%=advisory.id%>:start -->
+[<%=advisory.title%>](<%=advisory.url%>)
+Library: `<%=advisory.vulnerableLibrary%>`
+Affected versions: `<%-advisory.range%>`
+Severity: **<%=advisory.severity%>**
 <% if(advisory.fix){ -%>
-        Fix: <% if(advisory.isFixed){%>:heavy_check_mark:<%}else{%>:x:<%}%> `<%-advisory.fix%>`
-        Root Libraries: 
+Fix: <% if(advisory.isFixed){%>:heavy_check_mark:<%}else{%>:x:<%}%> `<%-advisory.fix%>`
+Root Libraries: 
 <% for(const lib of advisory.rootLibraries) {-%>
-            - <% if(lib.isFixed){%>:heavy_check_mark:<%}else{%>:x:<%}%> `<%=lib.name%> <%-lib.range%>`. <% if(lib.fix){%>Fixed in `<%-lib.fix%>`<%}%>
+ - <% if(lib.isFixed){%>:heavy_check_mark:<%}else{%>:x:<%}%> `<%=lib.name%> <%-lib.range%>`. <% if(lib.fix){%>Fixed in `<%-lib.fix%>`<%}%>
 <% } -%>
 <% } -%>
-        <!-- Lalaps.advisory.<%=advisory.id%>:end -->
-    <% } -%>
+<!-- Lalaps.advisory.<%=advisory.id%>:end -->
+<% } -%>
 <% } -%>
 
 <!-- Lalaps.details:end -->
