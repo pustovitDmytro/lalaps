@@ -45,14 +45,16 @@ export default class Advisory {
         const { fix, partialFix } = this.constructor.branches;
 
         if (res instanceof results.PARTIAL_FIX) return `${this._branchPrefix}/${this._branchMid}-${partialFix}`;
-        if (res instanceof results.FULL_FIX) return `${this._branchPrefix}/${this._branchMid}-${fix}`;
+
+        return `${this._branchPrefix}/${this._branchMid}-${fix}`;
     }
 
     getConcurentBranch(res) {
         const { fix, partialFix } = this.constructor.branches;
 
-        if (res instanceof results.FULL_FIX) return `${this._branchPrefix}/${this._branchMid}-${partialFix}`;
         if (res instanceof results.PARTIAL_FIX) return `${this._branchPrefix}/${this._branchMid}-${fix}`;
+
+        return `${this._branchPrefix}/${this._branchMid}-${partialFix}`;
     }
 
     getPrTemplate(res) {
