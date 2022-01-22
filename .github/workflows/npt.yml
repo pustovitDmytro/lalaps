@@ -22,6 +22,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     env:
       YARGS_MIN_NODE_VERSION: ${{ matrix.node }}
+      REDIS_HOST: redis
+      REDIS_PORT: '6379'
+    services:
+      redis:
+        image: redis
+        ports:
+        - 6379:6379
+        options: --entrypoint redis-server
     strategy:
       matrix:
         os: [ macos-latest, windows-latest, ubuntu-latest ]
