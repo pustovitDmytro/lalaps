@@ -1,3 +1,10 @@
+## [1.11.4](https://github.com/pustovitDmytro/lalaps/compare/v1.11.3...v1.11.4) (2022-01-22)
+
+
+### Fix
+
+* drop pr if no issues are found in latest build. fixes #32 ([ab59836](https://github.com/pustovitDmytro/lalaps/commit/ab5983645d7333b8fc831295f7650d003c5bce26)), closes [#32](https://github.com/pustovitDmytro/lalaps/issues/32)
+
 ## [1.11.3](https://github.com/pustovitDmytro/lalaps/compare/v1.11.2...v1.11.3) (2022-01-22)
 
 
