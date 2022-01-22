@@ -76,9 +76,9 @@
     "mocha-junit-reporter": "^2.0.2",
     "node-package-tester": "^1.1.25",
     "nyc": "^15.1.0",
-    "semantic-release": "^18.0.0",
+    "semantic-release": "^19.0.2",
     "semantic-release-heroku": "^1.2.0",
-    "semantic-release-telegram": "^1.2.16",
+    "semantic-release-telegram": "^1.5.0",
     "supertest": "^6.1.6",
     "winston-array-transport": "^1.1.5"
   },
