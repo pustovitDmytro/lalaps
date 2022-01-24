@@ -94,7 +94,7 @@
     "dotenv": "10.0.0",
     "ejs": "3.1.6",
     "execa": "5.1.1",
-    "express": "4.17.1",
+    "express": "4.17.2",
     "fs-extra": "10.0.0",
     "jsonwebtoken": "8.5.1",
     "logger-decorator": "1.6.0",
