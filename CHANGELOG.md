@@ -1,3 +1,10 @@
+## [1.11.6](https://github.com/pustovitDmytro/lalaps/compare/v1.11.5...v1.11.6) (2022-01-25)
+
+
+### Upgrade
+
+* Update dependency @bull-board/express to v3.9.0 (#38) ([27e817c](https://github.com/pustovitDmytro/lalaps/commit/27e817c8b180419a7f9eef1c4aa6a2677651c464)), closes [#38](https://github.com/pustovitDmytro/lalaps/issues/38)
+
 ## [1.11.5](https://github.com/pustovitDmytro/lalaps/compare/v1.11.4...v1.11.5) (2022-01-25)
 
 
