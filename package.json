@@ -84,7 +84,7 @@
   },
   "dependencies": {
     "@bull-board/api": "3.9.0",
-    "@bull-board/express": "3.7.0",
+    "@bull-board/express": "3.9.0",
     "base-api-client": "1.5.3",
     "bull": "4.2.1",
     "cls-hooked": "4.2.2",
