@@ -1,3 +1,16 @@
+## [1.11.5](https://github.com/pustovitDmytro/lalaps/compare/v1.11.4...v1.11.5) (2022-01-25)
+
+
+### Chore
+
+* adds redis to npt tests ([52f24f8](https://github.com/pustovitDmytro/lalaps/commit/52f24f8d48fc3812df9e681ae7f06c56e734743b))
+
+### Upgrade
+
+* Update dependency @bull-board/api to v3.9.0 (#37) ([e55c519](https://github.com/pustovitDmytro/lalaps/commit/e55c5192003031f8627b561a0f734fb05573f77e)), closes [#37](https://github.com/pustovitDmytro/lalaps/issues/37)
+* Update dependency bull to v4.2.1 (#16) ([ea7d5f9](https://github.com/pustovitDmytro/lalaps/commit/ea7d5f9f96dde53c995a98ef9bbbe48fa4e0a7f8)), closes [#16](https://github.com/pustovitDmytro/lalaps/issues/16)
+* Update dependency express to v4.17.2 (#34) ([83a6cf2](https://github.com/pustovitDmytro/lalaps/commit/83a6cf254da65735b35bcb8102b54645c090e8bc)), closes [#34](https://github.com/pustovitDmytro/lalaps/issues/34)
+
 ## [1.11.4](https://github.com/pustovitDmytro/lalaps/compare/v1.11.3...v1.11.4) (2022-01-22)
 
 
