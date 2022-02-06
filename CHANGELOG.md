@@ -1,3 +1,15 @@
+## [1.11.7](https://github.com/pustovitDmytro/lalaps/compare/v1.11.6...v1.11.7) (2022-02-06)
+
+
+### Chore
+
+* fixes some npm audit vulnerabilities (#35) ([e720f86](https://github.com/pustovitDmytro/lalaps/commit/e720f86872077c279934fc591fcf1eaa68576371)), closes [#35](https://github.com/pustovitDmytro/lalaps/issues/35)
+* fixes some npm audit vulnerabilities (#42) ([58cb53e](https://github.com/pustovitDmytro/lalaps/commit/58cb53e2fa3bcd1154d5261ea726daaa12b5f61a)), closes [#42](https://github.com/pustovitDmytro/lalaps/issues/42)
+
+### Upgrade
+
+* Update dependency simple-git to v2.48.0 (#41) ([0073bcd](https://github.com/pustovitDmytro/lalaps/commit/0073bcd99f125597ec942bb469363bf14d21419c)), closes [#41](https://github.com/pustovitDmytro/lalaps/issues/41)
+
 ## [1.11.6](https://github.com/pustovitDmytro/lalaps/compare/v1.11.5...v1.11.6) (2022-01-25)
 
 
