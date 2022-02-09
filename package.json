@@ -85,10 +85,10 @@
   "dependencies": {
     "@bull-board/api": "3.9.0",
     "@bull-board/express": "3.9.0",
-    "base-api-client": "1.5.3",
+    "base-api-client": "1.5.8",
     "bull": "4.2.1",
     "cls-hooked": "4.2.2",
-    "cottus": "1.10.0",
+    "cottus": "1.10.6",
     "dayjs": "1.10.7",
     "docopt": "0.6.2",
     "dotenv": "10.0.0",
@@ -97,8 +97,8 @@
     "express": "4.17.2",
     "fs-extra": "10.0.0",
     "jsonwebtoken": "8.5.1",
-    "logger-decorator": "1.6.0",
-    "myrmidon": "1.6.1",
+    "logger-decorator": "1.6.2",
+    "myrmidon": "1.7.2",
     "simple-git": "2.48.0",
     "uuid": "8.3.2",
     "winston": "3.3.3"
