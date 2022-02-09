@@ -1,3 +1,10 @@
+## [1.11.8](https://github.com/pustovitDmytro/lalaps/compare/v1.11.7...v1.11.8) (2022-02-09)
+
+
+### Upgrade
+
+* Update pustovitDmytro's packages (#45) ([b79d581](https://github.com/pustovitDmytro/lalaps/commit/b79d581420c781b1e5b2dda964029bd23d1d15b1)), closes [#45](https://github.com/pustovitDmytro/lalaps/issues/45)
+
 ## [1.11.7](https://github.com/pustovitDmytro/lalaps/compare/v1.11.6...v1.11.7) (2022-02-06)
 
 
