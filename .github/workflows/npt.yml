@@ -38,10 +38,10 @@ jobs:
       #   uses: superchargejs/redis-github-action@1.1.0
       #   with:
       #     redis-version: "6"
+      - uses: actions/checkout@master
       - uses: ./.github/actions/action-redis
         with:
           redis-version: "6"
-      - uses: actions/checkout@master
       - uses: actions/download-artifact@master
         with:
           name: package-tests
