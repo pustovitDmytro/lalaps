@@ -13,6 +13,7 @@ async function run(){
       console.log(`The event payload: ${payload}`);
       
       console.log('process.platform: ', process.platform);
+      
       if(process.platform=='win32'){
           console.log('Windows');
           return;
