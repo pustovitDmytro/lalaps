@@ -19,7 +19,7 @@ async function run(){
       if(process.platform=='darwin'){
       console.log('MacOS');
             
-      await exec(`brew install redis`);
+      await exec(`brew install redis@`+redisVersion);
 
       await exec(`redis-server --version`);
 
@@ -29,7 +29,7 @@ async function run(){
     }
     
       await exec(`sudo add-apt-repository ppa:redislabs/redis`);
-      await exec(`sudo apt-get install -y redis-tools redis-server`);
+      await exec(`sudo apt-get install -y redis-tools redis-server=`+redisVersion);
 
       await exec(`redis-server --version`);
     

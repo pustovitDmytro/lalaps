@@ -22,7 +22,8 @@ before(async function () {
     ]);
 });
 
-test('VALID_CONFIG + FULL_FIX #npm', async function () {
+// fix relates to node version
+test('VALID_CONFIG + FULL_FIX #npm #no-pack', async function () {
     const repo = await github.getRepo(`${fullFix.owner}/${fullFix.repository}`);
     const results = await repo.analyze();
 
