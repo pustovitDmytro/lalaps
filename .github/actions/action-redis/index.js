@@ -8,9 +8,6 @@ async function run(){
       console.log(`Installing Redis v.${redisVersion}!`);
       const time = (new Date()).toTimeString();
       core.setOutput("time", time);
-      // Get the JSON webhook payload for the event that triggered the workflow
-      const payload = JSON.stringify(github.context.payload, undefined, 2)
-      console.log(`The event payload: ${payload}`);
       
       console.log('process.platform: ', process.platform);
 
@@ -22,14 +19,19 @@ async function run(){
       if(process.platform=='darwin'){
       console.log('MacOS');
             
-      await exec(`brew install redis`)
+      await exec(`brew install redis`);
+
+      await exec(`redis-server --version`);
+
+      await exec(`brew services start redis`);
 
       return;
     }
     
-      await exec(
-        `sudo apt-get install -y redis-tools redis-server`
-      )
+      await exec(`sudo add-apt-repository ppa:redislabs/redis`);
+      await exec(`sudo apt-get install -y redis-tools redis-server`);
+
+      await exec(`redis-server --version`);
     
     } catch (error) {
       core.setFailed(error.message);
