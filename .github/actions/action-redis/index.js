@@ -11,9 +11,24 @@ async function run(){
       // Get the JSON webhook payload for the event that triggered the workflow
       const payload = JSON.stringify(github.context.payload, undefined, 2)
       console.log(`The event payload: ${payload}`);
+
+      if(process.platform=='win32'){
+          console.log('Windows');
+          return;
+      }
+
+      if(process.platform=='darwin'){
+        console.log('MacOS');
+            
+      await exec(
+        `brew install redis`
+      )
+
+        return;
+    }
     
       await exec(
-        `sudo apt-get install -y redis-tools redis-server`
+        `apt-get install -y redis-tools redis-server`
       )
     
     } catch (error) {
