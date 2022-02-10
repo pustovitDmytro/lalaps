@@ -13,24 +13,22 @@ async function run(){
       console.log(`The event payload: ${payload}`);
       
       console.log('process.platform: ', process.platform);
-      
+
       if(process.platform=='win32'){
           console.log('Windows');
           return;
       }
 
       if(process.platform=='darwin'){
-        console.log('MacOS');
+      console.log('MacOS');
             
-      await exec(
-        `brew install redis`
-      )
+      await exec(`brew install redis`)
 
-        return;
+      return;
     }
     
       await exec(
-        `apt-get install -y redis-tools redis-server`
+        `sudo apt-get install -y redis-tools redis-server`
       )
     
     } catch (error) {

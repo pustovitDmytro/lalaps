@@ -40,8 +40,6 @@ jobs:
       #     redis-version: "6"
       - uses: actions/checkout@master
       - uses: ./.github/actions/action-redis
-        with:
-          redis-version: "6"
       - uses: actions/download-artifact@master
         with:
           name: package-tests

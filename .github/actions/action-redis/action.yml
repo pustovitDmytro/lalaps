@@ -3,7 +3,6 @@ description: 'Greet someone and record the time'
 inputs:
   redis-version:
     description: 'Redis version'
-    required: true
     default: '6'
 outputs:
   time: # id of output
