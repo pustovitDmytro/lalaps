@@ -1,0 +1,13 @@
+name: 'Action Redis'
+description: 'Greet someone and record the time'
+inputs:
+  redis-version:
+    description: 'Redis version'
+    required: true
+    default: '6'
+outputs:
+  time: # id of output
+    description: 'The time we greeted you'
+runs:
+  using: 'node16'
+  main: 'index.js'

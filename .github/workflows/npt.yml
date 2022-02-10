@@ -34,8 +34,11 @@ jobs:
       - name: Show configuration
         run: |
           npm config get user-agent
-      - name: Start Redis
-        uses: superchargejs/redis-github-action@1.1.0
+      # - name: Start Redis
+      #   uses: superchargejs/redis-github-action@1.1.0
+      #   with:
+      #     redis-version: "6"
+      - uses: .github/actions/action-redis
         with:
           redis-version: "6"
       - uses: actions/checkout@master
