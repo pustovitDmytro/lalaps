@@ -13,13 +13,15 @@ async function run(){
 
       if(process.platform=='win32'){
           console.log('Windows');
+          await exec(`choco install memurai-developer`);
+
           return;
       }
 
       if(process.platform=='darwin'){
       console.log('MacOS');
             
-      await exec(`brew install redis@`+redisVersion);
+      await exec(`brew install redis`);
 
       await exec(`redis-server --version`);
 
@@ -29,7 +31,7 @@ async function run(){
     }
     
       await exec(`sudo add-apt-repository ppa:redislabs/redis`);
-      await exec(`sudo apt-get install -y redis-tools redis-server=`+redisVersion);
+      await exec(`sudo apt-get install -y redis-tools redis-server`);
 
       await exec(`redis-server --version`);
     
