@@ -24,19 +24,12 @@ jobs:
       YARGS_MIN_NODE_VERSION: ${{ matrix.node }}
     strategy:
       matrix:
+        os: [macos-latest, windows-latest, ubuntu-latest]
+        node: [14]
         include:
-          - os: macos-latest
-            node: [ 14 ]
-            redis: "1"
-            redis_user: 'default'
           - os: windows-latest
-            node: [ 14 ]
             redis: "2"
             redis_user: ''
-          - os: ubuntu-latest
-            node: [ 14, 16 ]
-            redis: "3"
-            redis_user: 'default'
     needs: build
     steps:
       - uses: actions/setup-node@v2
