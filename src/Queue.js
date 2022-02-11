@@ -25,7 +25,7 @@ export default class Queue {
                 host     : redis.host,
                 db       : redis.db,
                 password : redis.password,
-                username : redis.username
+                username : redis.username || null
             },
             prefix : packageConfig.name
         });

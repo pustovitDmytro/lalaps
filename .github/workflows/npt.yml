@@ -24,8 +24,17 @@ jobs:
       YARGS_MIN_NODE_VERSION: ${{ matrix.node }}
     strategy:
       matrix:
-        os: [ macos-latest, windows-latest, ubuntu-latest ]
-        node: [ 14 ]
+        include:
+          - os: macos-latest
+            redis: "1"
+            redis_user: 'default'
+          - os: windows-latest
+            redis: "2"
+            redis_user: ''
+          - os: ubuntu-latest
+            redis: "3"
+            redis_user: 'default'
+        node: [ 14, 16 ]
     needs: build
     steps:
       - uses: actions/setup-node@v2
@@ -40,6 +49,8 @@ jobs:
       #     redis-version: "6"
       - uses: actions/checkout@master
       - uses: ./.github/actions/action-redis
+        with: 
+          redis-version: "${{matrix.redis}}"
       - uses: actions/download-artifact@master
         with:
           name: package-tests
@@ -48,5 +59,7 @@ jobs:
         working-directory: tmp/package-tests
         run: npm install
       - name: Run tests
+        env:
+          REDIS_USER: ${{ matrix.redis_user }}
         working-directory: tmp/package-tests
         run: npm run test
