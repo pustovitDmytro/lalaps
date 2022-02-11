@@ -26,15 +26,17 @@ jobs:
       matrix:
         include:
           - os: macos-latest
+            node: [ 14 ]
             redis: "1"
             redis_user: 'default'
           - os: windows-latest
+            node: [ 14 ]
             redis: "2"
             redis_user: ''
           - os: ubuntu-latest
+            node: [ 14, 16 ]
             redis: "3"
             redis_user: 'default'
-        node: [ 14, 16 ]
     needs: build
     steps:
       - uses: actions/setup-node@v2
