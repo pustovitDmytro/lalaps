@@ -99,7 +99,7 @@
     "jsonwebtoken": "8.5.1",
     "logger-decorator": "1.6.2",
     "myrmidon": "1.7.2",
-    "simple-git": "2.48.0",
+    "simple-git": "^3.4.0",
     "uuid": "8.3.2",
     "winston": "3.3.3"
   }
